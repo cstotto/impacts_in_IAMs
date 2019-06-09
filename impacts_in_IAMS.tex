@@ -4,7 +4,7 @@
 \usepackage{lineno}
 \modulolinenumbers[5]
 
-\journal{Journal of Economic Dynamics \& Control}
+%\journal{Journal of Economic Dynamics \& Control}
 \makeatletter
 \def\ps@pprintTitle{%
  \let\@oddhead\@empty
@@ -127,10 +127,10 @@ In the following, we assume (w.l.o.g.) that climate extremes have an immediate i
 Following \citet{BAK19} and \citet{HSI14}, we use panel regressions of the form
 \begin{equation}
   \label{eq:PRA}
-  \ln\big(A_{j,t})\big) = \gamma_j + \delta_{t} + \theta_j t + \sum_{l=0}^{L}\bA_{l}\varepsilon_{j,t-l}+\epsilon_{j,t}
+  \ln\big(A_{j,t}\big) = \gamma_j + \delta_{t} + \theta_j t + \sum_{l=0}^{L}\bA_{l}E_{j,t-l}+\epsilon_{j,t}
 \end{equation}
 to capture the effects of climate extremes on county-level TFP $A_{j,t}$, where index $j$ labels the countries, and all time-dependent observables are assumed to vary on the fast (discrete) timescale $t$ of the bio-physical impacts (e.g, annual or monthly).
-In the above equation, the timeseries of TFP $A_{j,t}$ are de-trended log-linearly by accounting for country and year fixed-effects denoted by $\gamma_j$, and $\delta_t$, respectively, as well as for country-specific time trends $\theta_j t$. The persistent effects of climate extremes on total factor productivity are measured by the coefficients $\beta_l$, where the index $l\in[0,\ldots,L]$ numbers the time-lags up to the maximum lag-time $L$. Further, the $\varepsilon_{j,t-l}$'s denote the bio-physical hazard indicators (e.g, flooded area), and standard errors are denoted by $\epsilon_{j,t}$.
+In the above equation, the timeseries of TFP $A_{j,t}$ are de-trended log-linearly by accounting for country and year fixed-effects denoted by $\gamma_j$, and $\delta_t$, respectively, as well as for country-specific time trends $\theta_j t$. The persistent effects of climate extremes on total factor productivity are measured by the coefficients $\beta_l$, where the index $l\in[0,\ldots,L]$ numbers the time-lags up to the maximum lag-time $L$. Further, the $E_{j,t-l}$'s denote the bio-physical hazard indicators (e.g, flooded area), and standard errors are denoted by $\epsilon_{j,t}$.
 \begin{itemize}
 \item For the statistics, it might be beneficial to use the same hazard indicator (e.g., affected people) for all impact categories. If this is not possible, we will have to sum the impacts on TFP across categories
   \item Is there an issue with the units of the coefficients $\beta_l$ if we use different hazard indicators for the impact categories?
@@ -138,20 +138,20 @@ In the above equation, the timeseries of TFP $A_{j,t}$ are de-trended log-linear
 
 \section{Cumulative country level impacts}
 From Eq.~\eqref{eq:PRA}, we may derive, the cumulative damages at time $t$
-for each realization of hazard indicators. For that, we first define the damage that is caused at time $t$ in country $j$ by a series of hazards $\lbrace \varepsilon_{j,t-m}^i\rbrace_{m=0}^L$ striking at timepoints  $t-L,\ldots,t$\footnote{\tc{red}{This is not a good description of this term.}} as   
+for each realization of hazard indicators. For that, we first define the damage that is caused at time $t$ in country $j$ by a series of hazards $\lbrace E_{j,t-m}^i\rbrace_{m=0}^L$ striking at timepoints  $t-L,\ldots,t$\footnote{\tc{red}{This is not a good description of this term.}} as   
 \begin{equation}
   \label{eq:dA}
-  \dA_{j,t}\left(\lbrace \varepsilon_{j,t-m}^i\rbrace_{m=0}^L\right)\equiv \sum_{m=0}^L\beta_m\sum_{i=0}^I\varepsilon_{j,t-m}^i,
+  \dA_{j,t}\left(\lbrace E_{j,t-m}^i\rbrace_{m=0}^L\right)\equiv \sum_{m=0}^L\beta_m\sum_{i=0}^IE_{j,t-m}^i,
 \end{equation}
 where index $i$ numbers the events that affect country $j$ at time $t$. Accounting for the persistence of damages, the cumulative damage to TFP at time $t\in[2005,2100]$ reads
 \begin{equation}
   \label{eq:dA}
-  \DA_{j,t,d}\left(\lbrace \varepsilon\rbrace_{j,b,t}\right)\equiv 1 - \ \prod_{n=0}^{t}\left(1-\dA_{j,t-n}\right),
+  \DA_{j,t,d}\left(\lbrace E\rbrace_{j,b,t}\right)\equiv 1 - \ \prod_{n=0}^{t}\left(1-\dA_{j,t-n}\right),
 \end{equation}
-where $\lbrace \varepsilon\rbrace_{j,t,d}$ denotes a realization $d\in\mbN_d$ of bio-physical hazards for country $j$ up to time $t$ drawn from the ISIMIP impact ensemble. The ISIMIP2b modeling round includes $3$ SSPs, $4$ GCMs and a various number $\mbN_c$ of global impact models for each event category $c\in\mbC$. For each RCP-SSP-GCM combination, we may obtain a unique temperature path providing a bijective\footnote{\tc{red}{Is this true?}} mapping from time $t$ to global mean temperature $T\equiv T(t)$. For each of these temperature paths, we may then derive $\mbN_d\equiv \prod_{c\in\mbC} \mbN_c$ realization of bio-physical hazards from the  ISIMIP simulations.
+where $\lbrace E\rbrace_{j,t,d}$ denotes a realization $d\in\mbN_d$ of bio-physical hazards for country $j$ up to time $t$ drawn from the ISIMIP impact ensemble. The ISIMIP2b modeling round includes $1$ SSP (SSP2.6), $4$ GCMs and a various number $\mbN_c$ of global impact models for each event category $c\in\mbC$. For each RCP-SSP-GCM combination, we may obtain a unique temperature path providing a bijective\footnote{\tc{red}{Is this true?}} mapping from time $t$ to global mean temperature $T\equiv T(t)$. For each of these temperature paths, we may then derive $\mbN_d\equiv \prod_{c\in\mbC} \mbN_c$ realization of bio-physical hazards from the  ISIMIP simulations.
 
 \section{Temperature dependence of impacts}
-Let  $\Delta T\equiv T(t_f)-T(t_0)$ with $t_f>t_0$ denote the interval of global mean temperature of interest. We then subdivide $\Delta T$ into $N_b$ equidistant bins $\Delta T_b$ of width $\Delta T/N_b$. Since the mapping from time to global mean temperature is bijective, we obtain for each temperature bin and each realization $\lbrace \varepsilon\rbrace_{j,t,d}$ the associated set of cumulative damages as
+Let  $\Delta T\equiv T(t_f)-T(t_0)$ with $t_f>t_0$ denote the interval of global mean temperature of interest. We then subdivide $\Delta T$ into $N_b$ equidistant bins $\Delta T_b$ of width $\Delta T/N_b$. Since the mapping from time to global mean temperature is bijective, we obtain for each temperature bin and each realization $\lbrace E\rbrace_{j,t,d}$ the associated set of cumulative damages as
 \begin{equation}
   \label{eq:DDA}
   \mbDA_{j,d}(\Delta T_b)\equiv\lbrace \DA_{j,t,d}\, \vert\, t' \text{ for } T(t')\in\Delta T_b \rbrace.

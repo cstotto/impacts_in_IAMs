@@ -3,10 +3,9 @@
 \newcommand{\LASpace}{\\\hspace*{1.6em}}
 \providecommand{\herv}[1]{\tc{hervor}{#1}}
 \providecommand{\on}[1]{\operatorname{#1}}
-\providecommand{\todo}[1]{\leavevmode\newline\textcolor{red}{TODO: #1}}
+\newcommand{\todo}[1]{{\color{red!80!black} TODO: {\itshape\color{orange!70!black} #1}}}
 \DeclareRobustCommand{\acclimate}{\emph{acclimate}\xspace}
 \DeclareRobustCommand{\Acclimate}{\emph{Acclimate}\xspace}
-
 
 \usepackage{xspace}  %leerzeichen bei bedarf, aber nicht vor satzeichen
 \providecommand{\tc}[2]{\textcolor{#1}{#2}}
@@ -24,7 +23,7 @@
 \newcommand{\Cov}{\operatorname{Var}}
 \newcommand{\mbR}{\mathbb{R}}
 \newcommand{\mcF}{\mathcal{F}}
-\newcommand{\argmin}{\operatornamewithlimits{argmin}}
+%\newcommand{\argmin}{\operatornamewithlimits{argmin}}
 \newcommand{\argmax}{\operatornamewithlimits{argmax}}
 \renewcommand{\minof}[2]{\min\left[#1\,,\,#2\right]}
 \newcommand{\minofthree}[3]{\min\left[#1\,,\,#2\,,\,#3\right]}
@@ -49,207 +48,57 @@
 \newcommand{\bA}{\beta^A}
 \newcommand{\dA}{\delta^A}
 
+\newcommand{\newleftside}{\ifthenelse{\isodd{\thepage}}{\newpage}{\newpage\phantom{placeholder}\thispagestyle{empty} \newpage}}
+\newcommand{\newrightside}{\ifthenelse{\isodd{\thepage}}{\newpage\phantom{placeholder}\thispagestyle{empty} \newpage}{\newpage}}
+%
+\DeclareCaptionLabelFormat{cont}{#1~#2~(cont.)}
+
+\newcommand{\define}{:=}
+\newcommand{\set}{:=}
+\newcommand{\from}{\leftarrow}
+\renewcommand{\to}{\rightarrow}
+\newcommand{\bndollar}[1]{\$#1bn}
+
+\makeatletter
+\newcommand{\colorwave}[1][blue]{\bgroup \markoverwith{\lower3.5\p@\hbox{\sixly \textcolor{#1}{\char58}}}\ULon}
+\font\sixly=lasy6
+\makeatother
+\newcommand{\todoline}{\colorwave[red]}
+
+\newcommand{\captioncr}{{\protect\\}}
+\AtBeginDocument{\renewcommand\appendixname{Appendix~}}
+\def\UrlBreaks{\do\/\do-\/\do_}
+
+\makeatletter
+% for aligning in math modes:
+\newcommand{\pushright}[1]{\ifmeasuring@#1\else\omit\hfill$\displaystyle#1$\fi\ignorespaces}
+\newcommand{\pushcenter}[1]{\ifmeasuring@#1\else\omit\hfill$\displaystyle#1$\hfill\fi\ignorespaces}
+\newcommand{\pushleft}[1]{\ifmeasuring@#1\else\omit$\displaystyle#1$\hfill\fi\ignorespaces}
+% instead of eqnarray use:
+% \begin{alignat}{4} a&&\pushcenter{=}&b \end{alignat}
+\makeatother
+
+\newcommand{\annot}[2][]{%
+  \pdfannot width \linewidth height 2\baselineskip depth 0pt{%
+    /Subtype/Text%
+    /Open false
+    /Name /Comment%
+    /CA .4%
+    /C [.3 .6 .9]%
+    /T (\pdfescapestring{#1})%
+    /Contents(\pdfescapestring{\detokenize{#2}})%
+  }
+}
+\ifdefined\note\relax\else
+\newcommand\note[1]{\marginnote{\begin{minipage}{0.8\marginparwidth}\footnotesize\raggedright{}#1\end{minipage}}}
+\fi
+
 %#############################
 % Sets
 %#############################
 \newcommand{\mbC}{\mathbb{C}}
 \newcommand{\mbN}{\mathbb{N}}
 \newcommand{\mbDA}{\mathbb{D}^A}
-% %#############################
-% % Demands
-% %#############################
-% \newcommand{\starD}{D^*}
-
-% %#############################
-% % Use
-% %#############################
-% \newcommand{\hatU}{\hat{U}}
-% \newcommand{\starU}{U^*}
-% \newcommand{\tildeU}{\tilde{U}}
-% %#############################
-% % Consumption
-% %#############################
-% \newcommand{\tildeC}{\tilde{\mathcal{C}}}
-% \newcommand{\starC}{\mathcal{C}^*}
-% \newcommand{\C}{\mathcal{C}}
-% %#############################
-% % Demands
-% %#############################
-% \newcommand{\bD}{\breve{D}}
-% \newcommand{\maxD}{D^{\operatorname{max}}}
-% \newcommand{\minD}{D^{\operatorname{min}}}
-% \newcommand{\Dsto}{D^{\operatorname{sto}}}
-% \newcommand{\bDsto}{\breve{D}^{\operatorname{sto}}}
-% \newcommand{\maxDsto}{D^{\operatorname{sto},\operatorname{max}}}
-% \newcommand{\minDsto}{D^{\operatorname{sto},\operatorname{min}}}
-% \newcommand{\optDsto}{D^{\operatorname{sto},\operatorname{opt}}}
-% \newcommand{\optD}{D^{\operatorname{opt}}}
-% \newcommand{\nopt}{n^{\operatorname{opt}}}
-% %expected production
-% \newcommand{\EjsbXir}{\E^{js}_{\breve{X}_{ir}}}
-% %shares
-% \newcommand{\Ejsbsirfromjs}{\E^{js}_{\breve{s}_{\irfromjs}}}
-% %expected demand curv
-% \newcommand{\Ejsbnir}{\E^{js}_{\breve{n}_{ir}}}
-% %expected maximal demand request at time t
-% \newcommand{\EjsmaxDtirfromjs}{\E^{js}_{D_{\irfromjs}^{\t,\operatorname{max}}}}
-
-% %#############################
-% % Production
-% %#############################
-% \newcommand{\pX}{X^{\prime}}
-% \newcommand{\bXjs}{\breve{X}_{js}}
-% \newcommand{\EbXjs}{\mathbb{E}_{\breve{X}_{js}}}
-% \newcommand{\hatX}{\hat{X}}
-% \newcommand{\Xmax}{X^{\operatorname{max}}}
-% \newcommand{\optX}{X^{\operatorname{opt}}}
-% \newcommand{\starX}{X^*}
-% \newcommand{\poX}{X^{\operatorname{po}}}
-% \newcommand{\Zlast}{Z_{\operatorname{last}}}
-
-% \newcommand{\globX}{X_{\operatorname{glob}}}
-% %#############################
-% % Production ratio
-% %#############################
-% \newcommand{\bpjs}{\breve{p}_{js}}
-
-
-% %#############################
-% %
-% %#############################
-% \newcommand{\maxl}{l^{\max}}
-
-
-% %#############################
-% % Losses
-% %#############################
-% \newcommand{\LD}{L^{D}}
-% \newcommand{\LI}{L^I}
-% \newcommand{\LT}{L^T}
-
-% \newcommand{\lD}{l^{D}}
-% \newcommand{\lI}{l^I}
-% \newcommand{\lT}{lT}
-
-% %#############################
-% % Revenue
-% %#############################
-% \newcommand{\ldR}{R^{\operatorname{ld}}}
-% %#############################
-% % Expenditure
-% %#############################
-% \newcommand{\hatE}{\hat{E}}
-% %#############################
-% % Storage
-% %#############################
-% \newcommand{\starS}{S^*}
-% \newcommand{\Smax}{S^{\operatorname{max}}}
-% \newcommand{\defT}{T^{\operatorname{def}}}
-
-% %#############################
-% % Costs
-% %#############################
-% \newcommand{\DTP}{\Delta\operatorname{TP}}
-% \newcommand{\DSP}{\Delta\operatorname{SP}}
-% \newcommand{\labC}{C^{\operatorname{lab}}}
-% \newcommand{\matC}{C^{\operatorname{in}}}
-% \newcommand{\penC}{C^{\operatorname{pen}}}
-% \newcommand{\labn}{n^{\operatorname{lab}}}
-% \newcommand{\matn}{\bar{n}^{\operatorname{in}}}
-% \newcommand{\matnt}{\bar{n}^{\operatorname{in},\t}}
-% \newcommand{\matnstar}{\bar{n}^{\operatorname{in},*}}
-% %%%%%%%%%%%%%%%%%%
-% %unit costs and prices
-% %%%%%%%%%%%%%%%%%%
-% \newcommand{\nc}{n^{c}}
-% \newcommand{\np}{n^{p}}
-% \newcommand{\nminjs}{n^{\operatorname{min}}_{js\leftarrow}}
-% \newcommand{\noptjs}{n^{\operatorname{opt}}_{js\leftarrow}}
-% \newcommand{\Dnsc}{\Delta n^{\operatorname{sto}}}
-% \newcommand{\Dntc}{\Delta n^{\operatorname{sto}}}
-
-% \newcommand{\barn}{\bar{n}}
-% \newcommand{\nco}{n^{co}}
-% \newcommand{\npe}{n^{>}}
-% \newcommand{\npemax}{n^{\operatorname{>,max}}}
-% \newcommand{\nmax}{n^{\operatorname{max}}}
-% \newcommand{\nspmax}{\bar{n}^{\operatorname{sp,max}}} % maximal selling price
-% \newcommand{\npmax}{n^{p,\operatorname{max}}} % maximal purchasing price
-% \newcommand{\Ipe}{I^{\operatorname{>}}}
-% %#########
-% % Surplus, Value added
-% %#########
-% \newcommand{\SU}{\operatorname{SU}}
-% \newcommand{\VA}{\operatorname{VA}}
-
-% %#########
-% % Demands
-% %#########
-
-% %%%%%%%%%%%%%%%%%%%%
-% % Elasticities
-% %%%%%%%%%%%%%%%%%%%%
-% \newcommand{\es}{\varepsilon^s}
-% \newcommand{\ed}{\varepsilon^d}
-
-% % Forcing duration
-% \newcommand{\Tforc}{T^{\operatorname{forc}}}
-
-% %%%%%%%%%%%%%%%%%%%%
-% % shares
-% %%%%%%%%%%%%%%%%%%%%
-% \newcommand{\mins}{s^{\operatorname{min}}}
-% \newcommand{\maxs}{s^{\operatorname{max}}}
-% \newcommand{\exppes}{s^{<}}
-% \newcommand{\exppen}{n^{<}}
-% \newcommand{\Ejsbsirjs}{\E^{js}_{\breve{s}_{\irfromjs}}}
-
-% %%%%%%%%%%%%%%%%%%%%
-% %Flows
-% %%%%%%%%%%%%%%%%%%%%
-% \renewcommand{\t}{(t)}
-% \newcommand{\tmOne}{(t-1)}
-% \newcommand{\irtojs}{ir\rightarrow js}
-% \newcommand{\itojs}{i\rightarrow js}
-% \newcommand{\iptojs}{i'\rightarrow js}
-% \newcommand{\jstoku}{js\rightarrow ku}
-
-% \newcommand{\irptojs}{ir'\rightarrow js}
-% \newcommand{\irfromjs}{ir\leftarrow js}
-% \newcommand{\irpfromjs}{ir'\leftarrow js}
-% \newcommand{\ifromjs}{i\leftarrow js}
-% \newcommand{\jsfromku}{js\leftarrow ku}
-
-% %%%%%%%%%%%%%%%%%%%%
-% % Sets
-% %%%%%%%%%%%%%%%%%%%%
-% \newcommand{\Iopt}{J^{\operatorname{opt}}}
-% %%%%%%%%%%%%%%%%%%%%
-% %Units
-% %%%%%%%%%%%%%%%%%%%%
-% \newcommand{\CUR}{\unit[]{CUR}}
-% \newcommand{\USD}{\unit[]{USD}}
-
-% %%%%%%%%%%%%%%%%%%%%
-% %regional sector
-% %%%%%%%%%%%%%%%%%%%%
-% \newcommand{\MACHJPN}{\text{\textsc{mach:jpn}}}
-% \newcommand{\MACHUSA}{\text{\textsc{mach:usa}}}
-% \newcommand{\MACHCZE}{\text{\textsc{mach:cze}}}
-% \newcommand{\MACHCHN}{\text{\textsc{mach:chn}}}
-% \newcommand{\FOODJPN}{\text{\textsc{food:jpn}}}
-% \newcommand{\MACH}{\text{\textsc{mach}}}
-% \newcommand{\FOOD}{\text{\textsc{food}}}
-% \newcommand{\USA}{\text{\textsc{usa}}}
-% \newcommand{\CZE}{\text{\textsc{cze}}}
-% \newcommand{\CHN}{\text{\textsc{chn}}}
-% \newcommand{\JPN}{\text{\textsc{jpn}}}
-% \newcommand{\CPA}{\text{\textsc{cpa}}}
-% \newcommand{\EU}{\text{\textsc{eu{\small{28}}}}}
-% \newcommand{\AFR}{\text{\textsc{afr}}}
-% \newcommand{\PAO}{\text{\textsc{pao}}}
-
-
 %%%%%%%%%%%%%%%%
 % Farben
 %%%%%%%%%%%%%%%%
