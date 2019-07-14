@@ -171,9 +171,131 @@ where $\langle\cdot\rangle$ denotes the ensemble average.
 \label{sec:regInt}
 Since most IAMs operate on the level of world regions $r\in\mbN_r$, we have to average Eq.~\eqref{eq:avDA} over the countries $j$ belonging to each region $r$ (weighted by average population or GDP or asset stock\footnote{\tc{red}{To be discussed!}})  in order to obtain damages $\langle \DA_{r}\rangle(\Delta T_b)$ for the time period associated with $\Delta T_b$.
 
+\section{Social Cost of Carbon}
+\label{sec:SCC}
 
-%\section*{Acknowledgments}
+\begin{itemize}
+\item modularization
+\end{itemize}
+An alternative approach to integrate climate impacts into IAMs is to first derive and analytical formula for the social cost of carbon $\SCC$ and soft couple it with the IAM, and the climate module.
 
+\subsection{Semi-analytic expression for $\SCC$}
+\label{subsec:analytSCC}
+Let us assume that the each regional economy $r$ growth exponentially with rate $g_{r,t}+\delta_{r,t}$, where $g_{r,t}$ denotes the growth rate of the unperturbed growth path (without climate shocks) and $\delta_{r,t}$ describes climate induced deviations from this path. Regional output $Y_{r,t}$ then obeys the following linear difference equation
+\begin{equation}
+  \label{eq:expGrowth}
+  Y_t\equiv\big[1+g_{r,t}+\delta_{r,t}\big]Y_{t-1}.
+\end{equation}
+The latter may be simplified by a coordinate transformation to a frame growing with the rate $g_{n,t}$ of the unperturbed system
+\begin{equation}
+  \label{eq:growFrame}
+  \tilde{Y}_t\equiv\prod_{t'=0}^t\left[1+g_{t'}\right]^{-1}Y_{t'}
+\end{equation}
+Applying this coordinate transformation to Eq.~\eqref{eq:expGrowth} and dropping the regional index $n$ for simplicity, yields
+\begin{align}
+\prod_{t'=0}^t(1+g_{t'})\tilde{Y}_t &= \prod_{t'=0}^{t-1}\big(1+g_{t'}\big)\tilde{Y}_{t-1}\big(1+g_{t'}+\delta_{t'}\big)\notag\\                                   &=\prod_{t'=0}^{t}\big(1+g_{t'}\big)\tilde{Y}_{t-1}\left(1+\frac{\delta_{t'}}{1+g_{t'}}\right)\notag\\
+  \Rightarrow \tilde{Y}_{t} &= \prod_{t'=0}^{t}\left(1+\frac{\delta_{t'}}{1+g_{t'}}\right)Y_0\label{eq:Ytilde},
+\end{align}
+where we have employed the relation $\tilde{Y}_0=Y_0$ in the last line. Transforming Eq.~\eqref{eq:Ytilde} back to the original coordinate system then yields
+\begin{equation}
+  \label{eq:1}
+  Y_t=D_tY^0_t,
+\end{equation}
+where
+\begin{equation}
+  \label{eq:D}
+  D_t\equiv\prod_{t'=0}^{t}\left(1+\frac{\delta_{t'}}{1+g_{t'}}\right)
+\end{equation}
+and
+\begin{equation}
+  \label{eq:YNull}
+ Y^0_t\equiv\prod_{t'=0}^{t} \big(1+g_{t'}\big)Y_0 
+\end{equation}
+ denote cumulative climate damages at time $t$ and the unperturbed growth path, respectively.
+
+\subsubsection{Regional Langrangian for $\SCC$}
+\label{sec:Lreg}
+\begin{itemize}
+\item Climate damages fully internal for regional planners
+\item \todo{Is this a standard approach to derive the SCC?}
+\end{itemize}
+\begin{itemize}
+\item Investments \todo{Strange forward definition of investments?}
+\begin{equation}
+  \label{eq:Ir}
+  I_{r,t}\equiv K_{r,t+1}-(1-\delta_K)K_{r,t}
+\end{equation}
+
+\item Regional utility
+\begin{equation}
+  \label{eq:ur}
+  u_{r,t}(c_{r,t})\equiv\sum_r \omega_r\frac{c_{r,t}^{1-\eta}-1}{1-\eta},
+\end{equation}
+where $\eta$ and $\omega_r$ denote the intertemporal elasticity of substitution and the regional Negishi weights, respectively.
+\end{itemize}
+\begin{multline}
+  \label{eq:Lreg} \mcL_r(\T;E_r,c_r)\equiv\sum_{t'=0}^{T}\sum_{r'}\left[\omega_{r'}N_{r',t'}u\big(c_{r',t'}\big)(1+\rho)^{-t'}\right.\\
+  \left.+\lambda_{r',t'}\left[Y_{r',t'}\big(E_{r',t'}\big)D_{r'}(T_{r',t'}) -c_{r',t'}N_{r',t'}-\left(K_{r',t'+1}-\big(1-\delta_K\big)K_{r',t'}\right)-p_{r,t}E_{r,t} \right]\right],
+\end{multline}
+where we have introduced the regional tax on carbon emissions $p_{r,t}$.
+\begin{itemize}
+\item Note that damages $D_{r,t}=D_{r,t}(T_{r,t})$ depend only implicitly via the regional temperature on time
+\end{itemize}
+The first order conditions then read
+\begin{itemize}
+\item Shadow price of consumption
+  \begin{equation}
+    \label{eq:dLdc}    \pf{L_r}{c_{r,t}}=N_{r,t}\omega_r(1+\rho)^{-t}c_{r,t}^{-\eta}-\lambda_{r,t}N_{r,t}\quad\Leftrightarrow\quad\lambda_{r,t} = \omega_r(1+\rho)^{-t}c_{r,t}^{-\eta}\quad\forall\,r,t
+  \end{equation}
+From Eq.~\eqref{eq:dLdc}, we may derive an expression for $\lambda_{r,t+1}$ in terms of $\lambda_{r,t}$,
+\begin{equation}
+  \label{eq:lambda_tpone} \lambda_{r,t-1}=\omega_r(1-\rho)^{1-t}c_{r,t-1}^{-\eta}=(1+\rho)\left(\frac{c_{r,t-1}}{c_{r,t}}\right)^{-\eta}\lambda_{r,t},
+\end{equation}
+which will permit us to simplify the golden rule of capital accumulation.
+\item Golden rule for capital accumulation
+  \begin{align} \pf{L_r}{K_{r,t}}=\lambda_{r,t}\left[\pf{(Y_{r',t'}D_{r'})}{K_{r,t}}+1-\delta_K\right]-\lambda_{r,t-1}&= 0\notag\\
+    \Leftrightarrow\quad 1+\underbrace{\pf{(Y_{r',t'}D_{r'})}{K_{r,t}}-\delta_K}_{\equiv r_{r,t}} &= (1+\rho)\left(\frac{c_{r,t-1}}{c_{r,t}}\right)^{-\eta}\quad\forall\, r,t \label{eq:dLdK}
+  \end{align}
+\item Emission tax determines marginal value of emissions for production  
+  \begin{equation}
+    \label{eq:dLdE} \pf{L_r}{E_{r,t}}=\lambda_{r,t}\left[D_{r,t}\pf{Y_{r,t}}{E_{r,t}}-p_{r,t}\right]\quad\Leftrightarrow\quad p_{r,t}=D_{r,t}\pf{Y_{r,t}}{E_{r,t}} \quad\forall\,r,t 
+  \end{equation}
+\end{itemize}
+
+
+\subsubsection{Global Langrangian for $\SCC$}
+\label{sec:Lglob}
+\begin{multline}
+  \label{eq:Lglob} \mcL(\T;E_r,c_r)\equiv\sum_{t'=0}^{\T}\sum_{r'}\left[\omega_{r'}N_{r',t'}u\big(c_{r',t'}\big)(1+\rho)^{-t'}\right.\\
+  \left.+\lambda_{r',t'}\left[Y_{r',t'}\big(E_{r',t'}\big)D_{r',t'}\big(T_{r',t'}\big) -c_{r',t'}N_{r',t'}-\left(K_{r',t'}-\big(1-\delta_K\big)K_{r',t'}\right) \right]\right]
+\end{multline}
+The first order conditions then read
+\begin{align}
+  \label{eq:partE}
+  \frac{\partial\mcL}{\partial E_{r,t}} &= \lambda_{r,t}\underbrace{\frac{\partial Y_{r,t}}{\partial E_{r,t}}D_{r,t}}_{=p_{r,t}}+\sum_{t'=0}^{t}\sum_{r'}\lambda_{r',t'}Y_{r',t'}\frac{\partial D_{r',t'}}{\partial E_{r,t}}=0\quad\forall\,r,t\notag\\
+  \Rightarrow \quad p_{r,t} &= -\lambda_{r,t}^{-1}\sum_{t'=0}^{t}\sum_{r'}\lambda_{r',t'}Y_{r',t'}\frac{\partial D_{r',t'}}{\partial E_{r,t}}\notag\\
+                                              &= -\lambda_{r,t}^{-1}\sum_{t'=0}^{t}\sum_{r'}\lambda_{r',t'}Y_{r',t'}\frac{\partial }{\partial E_{r,t}}\left[\prod_{t''=0}^{t'}\left[1+\frac{\delta_{r',t''}\left(\sum_{\tilde{t}=0}^{t''}E_{r',\tilde{t}}\right)}{1+g_{r,t''}} \right] \right]\notag\\
+                                         &=-\lambda_{r,t}^{-1}\sum_{t'=0}^{t}\sum_{r'}\lambda_{r',t'}Y_{r',t'} \sum_{t''=t}^{t'}\big(1+g_{n,t''}\big)^{-1}\pf{\delta_{r',t''}}{E_{r,t}}\prod_{\tilde{t}=0,\tilde{t}\neq t''}^{t'}\left[1+\frac{\delta_{r',\tilde{t}}}{1+g_{r,\tilde{t}}} \right]\notag\\
+                                         &=-\lambda_{r,t}^{-1}\sum_{t'=0}^{t}\sum_{r'}\lambda_{r',t'}Y_{r',t'}\underbrace{\prod_{\tilde{t}=0}^{t'}\left[1+\frac{\delta_{r',\tilde{t}}}{1+g_{r,\tilde{t}}}\right]}_{=D_{r',t'}}\sum_{t''=t}^{t'}\underbrace{(1+g_{r',t''}+\delta_{r',t''})^{-1}\pf{\delta_{r',t''}}{T_{r',t''}}}_{\equiv -\Theta_{r',t''}}\underbrace{\pf{T_{r',t''}}{E_{r,t}}}_{\equiv\Delta T_{r',t'',r,t}}\notag\\
+&= \lambda_{r,t}^{-1}\sum_{t'=0}^{t}\sum_{r'}\lambda_{r',t'}Y_{r',t'}D_{r',t'}\sum_{t''=t}^{t'}\Theta_{r',t''}\Delta T_{r',t'',r,t},  
+\end{align}
+where we have introduced the marginal change of the growth rate with temperature
+\begin{equation}
+  \label{eq:Theta}
+  \Theta_{r,t}\equiv - (1+g_{r,t}+\delta_{r,t})^{-1}\pf{\delta_{r,t}}{T_{r,t}}
+\end{equation}
+as well as the marginal response of temperature in region response to emissions
+\begin{equation}
+  \label{eq:DeltaT}
+  \Delta T_{r,t,r',t'}\equiv\begin{cases}
+    \pf{T_{r,t}}{E_{r',t'}} & \text{for}\quad t'\leq t\\
+    0 & \text{else}
+  \end{cases}.
+\end{equation}
+\begin{itemize}
+\item \todo{Emissions should not have a regional index}
+\item \todo{Damages are not explicitly time dependent anymore, only indirect dependence via the regional temperature}
+\end{itemize}
 \section*{Bibliography}
 %\bibliography{/home/christian/EXPACT/mendeley_libaries/ownPapers-acclimate_price_model.bib}
 \bibliography{lib.bib}

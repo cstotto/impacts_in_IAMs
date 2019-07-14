@@ -15,6 +15,7 @@
 
 %Mathoperators
 \newcommand{\E}{\mathbb{E}}
+\newcommand{\T}{\mathcal{T}}
 \renewcommand{\P}{\mathcal{P}}
 \newcommand{\Var}{\operatorname{Var}}
 \newcommand{\DDt}{\operatorname{D_{\Delta t}}}
@@ -28,6 +29,8 @@
 \renewcommand{\minof}[2]{\min\left[#1\,,\,#2\right]}
 \newcommand{\minofthree}[3]{\min\left[#1\,,\,#2\,,\,#3\right]}
 \renewcommand{\maxof}[2]{\max\left[#1\,,\,#2\right]}
+\newcommand{\pf}[2]{\frac{\partial#1}{\partial#2}}
+
 
 \newcommand{\first}{1^{\operatorname{st}}}
 \newcommand{\secnd}{2^{\operatorname{nd}}}
@@ -47,6 +50,15 @@
 \newcommand{\DK}{D^K}
 \newcommand{\bA}{\beta^A}
 \newcommand{\dA}{\delta^A}
+%#############################
+% SCC
+%#############################
+\newcommand{\SCC}{\operatorname{SCC}}
+\newcommand{\Lglob}{\mathcal{L}^{\operatorname{glob}}}
+\newcommand{\Lreg}{\mathcal{L}^{\operatorname{reg}}}
+\newcommand{\mcL}{\mathcal{L}}
+
+
 
 \newcommand{\newleftside}{\ifthenelse{\isodd{\thepage}}{\newpage}{\newpage\phantom{placeholder}\thispagestyle{empty} \newpage}}
 \newcommand{\newrightside}{\ifthenelse{\isodd{\thepage}}{\newpage\phantom{placeholder}\thispagestyle{empty} \newpage}{\newpage}}
