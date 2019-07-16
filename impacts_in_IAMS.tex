@@ -80,7 +80,8 @@
 % \ead{christian.otto@pik-potsdam.de}
 
 
-
+\author[PIK]{F.~Piontek}
+\author[PIK]{B.~Sörgel}
 \author[PIK]{T.~Geiger}
 \author[PIK]{K.~Frieler}
 
@@ -126,14 +127,13 @@ In the following, we assume (w.l.o.g.) that climate extremes have an immediate i
 \label{sec:empAna}
 Following \citet{BAK19} and \citet{HSI14}, we use panel regressions of the form
 \begin{equation}
-  \label{eq:PRA}
-  \ln\big(A_{j,t}\big) = \gamma_j + \delta_{t} + \theta_j t + \sum_{l=0}^{L}\bA_{l}E_{j,t-l}+\epsilon_{j,t}
+  \label{eq:PRGDP}
+  g_{j,t}\equiv \ln(\GDP_{j,t})-\ln(\GDP_{j,t-1}) = \gamma_j + \delta_{t} + \theta_j t + \sum_{l=0}^{L}\beta_{l}P_{j,t-l}+\epsilon_{j,t}
 \end{equation}
-to capture the effects of climate extremes on county-level TFP $A_{j,t}$, where index $j$ labels the countries, and all time-dependent observables are assumed to vary on the fast (discrete) timescale $t$ of the bio-physical impacts (e.g, annual or monthly).
-In the above equation, the timeseries of TFP $A_{j,t}$ are de-trended log-linearly by accounting for country and year fixed-effects denoted by $\gamma_j$, and $\delta_t$, respectively, as well as for country-specific time trends $\theta_j t$. The persistent effects of climate extremes on total factor productivity are measured by the coefficients $\beta_l$, where the index $l\in[0,\ldots,L]$ numbers the time-lags up to the maximum lag-time $L$. Further, the $E_{j,t-l}$'s denote the bio-physical hazard indicators (e.g, flooded area), and standard errors are denoted by $\epsilon_{j,t}$.
+to capture the effects of climate extremes on county-level growth domestic product $\GDP_{g,t}$, where index $j$ labels the countries, and all time-dependent observables are assumed to vary on the fast (discrete) timescale $t$ of the bio-physical impacts (e.g, annual or monthly).
+In the above equation, the timeseries of $\GDP$ $A_{j,t}$ are de-trended log-linearly by accounting for country and year fixed-effects denoted by $\gamma_j$, and $\delta_t$, respectively, as well as for country-specific time trends $\theta_j t$. The persistent effects of climate extremes on $\GDP$ are measured by the coefficients $\beta_l$, where the index $l\in[0,\ldots,L]$ numbers the time-lags up to the maximum lag-time $L$. Further, the $P_{j,t-l}$'s denote the population affected, and standard errors are denoted by $\epsilon_{j,t}$.
 \begin{itemize}
-\item For the statistics, it might be beneficial to use the same hazard indicator (e.g., affected people) for all impact categories. If this is not possible, we will have to sum the impacts on TFP across categories
-  \item Is there an issue with the units of the coefficients $\beta_l$ if we use different hazard indicators for the impact categories?
+\item \todo{People affected may have to be rescaled -> cf. mail to Hazem, people affected by multiple events per timestep are summed up}
 \end{itemize}
 
 \section{Cumulative country level impacts}
@@ -170,6 +170,9 @@ where $\langle\cdot\rangle$ denotes the ensemble average.
 \section{Regional integration}
 \label{sec:regInt}
 Since most IAMs operate on the level of world regions $r\in\mbN_r$, we have to average Eq.~\eqref{eq:avDA} over the countries $j$ belonging to each region $r$ (weighted by average population or GDP or asset stock\footnote{\tc{red}{To be discussed!}})  in order to obtain damages $\langle \DA_{r}\rangle(\Delta T_b)$ for the time period associated with $\Delta T_b$.
+
+
+
 
 \section{Social Cost of Carbon}
 \label{sec:SCC}
@@ -217,10 +220,10 @@ and
 \label{sec:Lreg}
 \begin{itemize}
 \item Climate damages fully internal for regional planners
-\item \todo{Is this a standard approach to derive the SCC?}
+\item \todo{Is this a standard approach to derive the SCC?-> Ask Gunnar}
 \end{itemize}
 \begin{itemize}
-\item Investments \todo{Strange forward definition of investments?}
+\item Investments
 \begin{equation}
   \label{eq:Ir}
   I_{r,t}\equiv K_{r,t+1}-(1-\delta_K)K_{r,t}
@@ -261,8 +264,18 @@ which will permit us to simplify the golden rule of capital accumulation.
     \label{eq:dLdE} \pf{L_r}{E_{r,t}}=\lambda_{r,t}\left[D_{r,t}\pf{Y_{r,t}}{E_{r,t}}-p_{r,t}\right]\quad\Leftrightarrow\quad p_{r,t}=D_{r,t}\pf{Y_{r,t}}{E_{r,t}} \quad\forall\,r,t 
   \end{equation}
 \end{itemize}
-
-
+Also, for deriving the social cost of carbon 
+\begin{equation}
+  \label{eq:Negishi}
+  \omega_{r}\approx \frac{c_{r,t}^{\eta}}{N_{t}}\quad\text{with }N_t\equiv\sum_{r'}c_{r',t}^{\eta} \quad\forall\,r,t
+\end{equation}
+\begin{subequations}
+  \label{eq:lambda}
+\begin{align} \lambda_{r',t'}&=\frac{(1+\rho)^{-t'}}{N_t}\left(\frac{c_{r',t}}{c_{r',t'}}\right)^{\eta}\quad\forall\, r',t',t\label{subeq:delta_rptp}\\
+  \overset{t'=t}{\Rightarrow}\quad
+  \lambda_{r,t}&=\lambda_{t}=\frac{(1+\rho)^{-t}}{N_t}\quad \forall t\label{subeq:delta_rt}
+\end{align}
+\end{subequations}
 \subsubsection{Global Langrangian for $\SCC$}
 \label{sec:Lglob}
 \begin{multline}
@@ -272,12 +285,12 @@ which will permit us to simplify the golden rule of capital accumulation.
 The first order conditions then read
 \begin{align}
   \label{eq:partE}
-  \frac{\partial\mcL}{\partial E_{r,t}} &= \lambda_{r,t}\underbrace{\frac{\partial Y_{r,t}}{\partial E_{r,t}}D_{r,t}}_{=p_{r,t}}+\sum_{t'=0}^{t}\sum_{r'}\lambda_{r',t'}Y_{r',t'}\frac{\partial D_{r',t'}}{\partial E_{r,t}}=0\quad\forall\,r,t\notag\\
-  \Rightarrow \quad p_{r,t} &= -\lambda_{r,t}^{-1}\sum_{t'=0}^{t}\sum_{r'}\lambda_{r',t'}Y_{r',t'}\frac{\partial D_{r',t'}}{\partial E_{r,t}}\notag\\
-                                              &= -\lambda_{r,t}^{-1}\sum_{t'=0}^{t}\sum_{r'}\lambda_{r',t'}Y_{r',t'}\frac{\partial }{\partial E_{r,t}}\left[\prod_{t''=0}^{t'}\left[1+\frac{\delta_{r',t''}\left(\sum_{\tilde{t}=0}^{t''}E_{r',\tilde{t}}\right)}{1+g_{r,t''}} \right] \right]\notag\\
-                                         &=-\lambda_{r,t}^{-1}\sum_{t'=0}^{t}\sum_{r'}\lambda_{r',t'}Y_{r',t'} \sum_{t''=t}^{t'}\big(1+g_{n,t''}\big)^{-1}\pf{\delta_{r',t''}}{E_{r,t}}\prod_{\tilde{t}=0,\tilde{t}\neq t''}^{t'}\left[1+\frac{\delta_{r',\tilde{t}}}{1+g_{r,\tilde{t}}} \right]\notag\\
-                                         &=-\lambda_{r,t}^{-1}\sum_{t'=0}^{t}\sum_{r'}\lambda_{r',t'}Y_{r',t'}\underbrace{\prod_{\tilde{t}=0}^{t'}\left[1+\frac{\delta_{r',\tilde{t}}}{1+g_{r,\tilde{t}}}\right]}_{=D_{r',t'}}\sum_{t''=t}^{t'}\underbrace{(1+g_{r',t''}+\delta_{r',t''})^{-1}\pf{\delta_{r',t''}}{T_{r',t''}}}_{\equiv -\Theta_{r',t''}}\underbrace{\pf{T_{r',t''}}{E_{r,t}}}_{\equiv\Delta T_{r',t'',r,t}}\notag\\
-&= \lambda_{r,t}^{-1}\sum_{t'=0}^{t}\sum_{r'}\lambda_{r',t'}Y_{r',t'}D_{r',t'}\sum_{t''=t}^{t'}\Theta_{r',t''}\Delta T_{r',t'',r,t},  
+  \frac{\partial\mcL}{\partial E_{r,t}} &= \lambda_{r,t}\underbrace{\frac{\partial Y_{r,t}}{\partial E_{r,t}}D_{r,t}}_{=p_{r,t}}+\sum_{t'=0}^{\T}\sum_{r'}\lambda_{r',t'}Y_{r',t'}\frac{\partial D_{r',t'}}{\partial E_{r,t}}=0\quad\forall\,r,t\notag\\
+  \Rightarrow \quad p_{r,t} &= -\lambda_{r,t}^{-1}\sum_{t'=0}^{\T}\sum_{r'}\lambda_{r',t'}Y_{r',t'}\frac{\partial D_{r',t'}}{\partial E_{r,t}}\notag\\
+                                              &= -\lambda_{r,t}^{-1}\sum_{t'=0}^{\T}\sum_{r'}\lambda_{r',t'}Y_{r',t'}\frac{\partial }{\partial E_{r,t}}\left[\prod_{t''=0}^{t'}\left[1+\frac{\delta_{r',t''}\left(\sum_{\tilde{t}=0}^{t''}E_{r',\tilde{t}}\right)}{1+g_{r,t''}} \right] \right]\notag\\
+                                         &=-\lambda_{r,t}^{-1}\sum_{t'=t}^{\T}\sum_{r'}\lambda_{r',t'}Y_{r',t'} \sum_{t''=t}^{t'}\big(1+g_{n,t''}\big)^{-1}\pf{\delta_{r',t''}}{E_{r,t}}\prod_{\tilde{t}=0,\tilde{t}\neq t''}^{t'}\left[1+\frac{\delta_{r',\tilde{t}}}{1+g_{r,\tilde{t}}} \right]\notag\\
+                                         &=-\lambda_{r,t}^{-1}\sum_{t'=t}^{\T}\sum_{r'}\lambda_{r',t'}Y_{r',t'}\underbrace{\prod_{\tilde{t}=0}^{t'}\left[1+\frac{\delta_{r',\tilde{t}}}{1+g_{r,\tilde{t}}}\right]}_{=D_{r',t'}}\sum_{t''=t}^{t'}\underbrace{(1+g_{r',t''}+\delta_{r',t''})^{-1}\pf{\delta_{r',t''}}{T_{r',t''}}}_{\equiv -\Theta_{r',t''}}\underbrace{\pf{T_{r',t''}}{E_{r,t}}}_{\equiv\Delta T_{r',t'',r,t}}\notag\\
+&= \sum_{t'=t}^{\T}\sum_{r'}\Phi_{r',t',t}Y_{r',t'}D_{r',t'}\sum_{t''=t}^{t'}\Theta_{r',t''}\Delta T_{r',t'',r,t},  
 \end{align}
 where we have introduced the marginal change of the growth rate with temperature
 \begin{equation}
@@ -287,15 +300,76 @@ where we have introduced the marginal change of the growth rate with temperature
 as well as the marginal response of temperature in region response to emissions
 \begin{equation}
   \label{eq:DeltaT}
-  \Delta T_{r,t,r',t'}\equiv\begin{cases}
-    \pf{T_{r,t}}{E_{r',t'}} & \text{for}\quad t'\leq t\\
-    0 & \text{else}
-  \end{cases}.
+  \Delta T_{r',t',r,t}\equiv\begin{cases}
+    \pf{T_{r',t'}}{E_{r,t}} & \text{for}\quad t'\geq t,\\
+    0 & \text{else}    .
+  \end{cases}
 \end{equation}
+\begin{align}
+  \label{eq:Phi} \Phi_{r',t',t}\equiv\lambda_{r,t}^{-1}\lambda_{r',t'}\overset{~\eqref{subeq:delta_rptp},~\eqref{subeq:delta_rt}}{=}(1+\rho)^{t-t'}\left(\frac{c_{r',t}}{c_{r',t'}}\right)^{\eta}&\overset{}{=} (1+\rho)^{-(t'-t)}\prod_{\tilde{t}=t+1}^{t'}\left(\frac{c_{r',\tilde{t}-1}}{c_{r',\tilde{t}}}\right)^{\eta} &\text{for }t\leq t'\\
+       &\overset{\eqref{eq:dLdK}}{=}
+         \begin{cases}
+           1 &\text{for }t=t',\\
+           \prod_{\tilde{t}=t+1}^{t'}(1+r_{r',\tilde{t}})^{-1} & \text{for }t<t'.
+           \end{cases}
+\end{align}
 \begin{itemize}
 \item \todo{Emissions should not have a regional index}
 \item \todo{Damages are not explicitly time dependent anymore, only indirect dependence via the regional temperature}
 \end{itemize}
+
+% \section{Empirical analysis}
+% \label{sec:empAna}
+% Following \citet{BAK19} and \citet{HSI14}, we use panel regressions of the form
+% \begin{equation}
+%   \label{eq:PRA}
+%   \ln\big(A_{j,t}\big) = \gamma_j + \delta_{t} + \theta_j t + \sum_{l=0}^{L}\bA_{l}E_{j,t-l}+\epsilon_{j,t}
+% \end{equation}
+% to capture the effects of climate extremes on county-level TFP $A_{j,t}$, where index $j$ labels the countries, and all time-dependent observables are assumed to vary on the fast (discrete) timescale $t$ of the bio-physical impacts (e.g, annual or monthly).
+% In the above equation, the timeseries of TFP $A_{j,t}$ are de-trended log-linearly by accounting for country and year fixed-effects denoted by $\gamma_j$, and $\delta_t$, respectively, as well as for country-specific time trends $\theta_j t$. The persistent effects of climate extremes on total factor productivity are measured by the coefficients $\beta_l$, where the index $l\in[0,\ldots,L]$ numbers the time-lags up to the maximum lag-time $L$. Further, the $E_{j,t-l}$'s denote the bio-physical hazard indicators (e.g, flooded area), and standard errors are denoted by $\epsilon_{j,t}$.
+% \begin{itemize}
+% \item For the statistics, it might be beneficial to use the same hazard indicator (e.g., affected people) for all impact categories. If this is not possible, we will have to sum the impacts on TFP across categories
+%   \item Is there an issue with the units of the coefficients $\beta_l$ if we use different hazard indicators for the impact categories?
+% \end{itemize}
+
+% \section{Cumulative country level impacts}
+% From Eq.~\eqref{eq:PRA}, we may derive, the cumulative damages at time $t$
+% for each realization of hazard indicators. For that, we first define the damage that is caused at time $t$ in country $j$ by a series of hazards $\lbrace E_{j,t-m}^i\rbrace_{m=0}^L$ striking at timepoints  $t-L,\ldots,t$\footnote{\tc{red}{This is not a good description of this term.}} as   
+% \begin{equation}
+%   \label{eq:dA}
+%   \dA_{j,t}\left(\lbrace E_{j,t-m}^i\rbrace_{m=0}^L\right)\equiv \sum_{m=0}^L\beta_m\sum_{i=0}^IE_{j,t-m}^i,
+% \end{equation}
+% where index $i$ numbers the events that affect country $j$ at time $t$. Accounting for the persistence of damages, the cumulative damage to TFP at time $t\in[2005,2100]$ reads
+% \begin{equation}
+%   \label{eq:dA}
+%   \DA_{j,t,d}\left(\lbrace E\rbrace_{j,b,t}\right)\equiv 1 - \ \prod_{n=0}^{t}\left(1-\dA_{j,t-n}\right),
+% \end{equation}
+% where $\lbrace E\rbrace_{j,t,d}$ denotes a realization $d\in\mbN_d$ of bio-physical hazards for country $j$ up to time $t$ drawn from the ISIMIP impact ensemble. The ISIMIP2b modeling round includes $1$ SSP (SSP2.6), $4$ GCMs and a various number $\mbN_c$ of global impact models for each event category $c\in\mbC$. For each RCP-SSP-GCM combination, we may obtain a unique temperature path providing a bijective\footnote{\tc{red}{Is this true?}} mapping from time $t$ to global mean temperature $T\equiv T(t)$. For each of these temperature paths, we may then derive $\mbN_d\equiv \prod_{c\in\mbC} \mbN_c$ realization of bio-physical hazards from the  ISIMIP simulations.
+
+% \section{Temperature dependence of impacts}
+% Let  $\Delta T\equiv T(t_f)-T(t_0)$ with $t_f>t_0$ denote the interval of global mean temperature of interest. We then subdivide $\Delta T$ into $N_b$ equidistant bins $\Delta T_b$ of width $\Delta T/N_b$. Since the mapping from time to global mean temperature is bijective, we obtain for each temperature bin and each realization $\lbrace E\rbrace_{j,t,d}$ the associated set of cumulative damages as
+% \begin{equation}
+%   \label{eq:DDA}
+%   \mbDA_{j,d}(\Delta T_b)\equiv\lbrace \DA_{j,t,d}\, \vert\, t' \text{ for } T(t')\in\Delta T_b \rbrace.
+% \end{equation}
+% To obtain relative TFP reductions that can be plugged into the IAM production function (cf.~Eq.~\eqref{eq:CD}), we have to take ensemble averages over (i) the members of the set $\mbDA_{j,d}(\Delta T_d)$ and (ii) the different realizations of biophysical hazards $\mbN_d$,
+% \begin{equation}
+%   \label{eq:avDA}
+%   \langle \DA_{j}\rangle(\Delta T_b)\equiv\big\langle\langle \DA_{j,t,d}\rangle_{\mbN_D}\big\rangle_{\mbDA_{j}}(\Delta T_b).
+% \end{equation}
+% where $\langle\cdot\rangle$ denotes the ensemble average.
+
+% \begin{itemize}
+% \item Does the order in which we take the averages matter?
+% \end{itemize}
+
+% \section{Regional integration}
+% \label{sec:regInt}
+% Since most IAMs operate on the level of world regions $r\in\mbN_r$, we have to average Eq.~\eqref{eq:avDA} over the countries $j$ belonging to each region $r$ (weighted by average population or GDP or asset stock\footnote{\tc{red}{To be discussed!}})  in order to obtain damages $\langle \DA_{r}\rangle(\Delta T_b)$ for the time period associated with $\Delta T_b$.
+
+
+
+
 \section*{Bibliography}
 %\bibliography{/home/christian/EXPACT/mendeley_libaries/ownPapers-acclimate_price_model.bib}
 \bibliography{lib.bib}
