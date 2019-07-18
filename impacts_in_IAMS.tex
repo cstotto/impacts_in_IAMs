@@ -119,7 +119,7 @@ The production system in integrated assessment models (IAMs) is often described 
   \label{eq:CD}
   Y(\tau,T)\equiv \left[\xi_K(\theta_K \DK(T)K)^{\rho_Y}+\xi_L(\DL(T)\theta_LL)^{\rho_Y}+\xi_E\theta_\E\E)^{\rho_Y}\right]^{\frac{1}{\rho_Y}}
 \end{equation}
-where $\tau$ is the slow timescale of the IAM (e.g, decadal), and $A$,$K$,$L$,$\alpha$ denote total factor productivity (TFP), capital stock, labor, and the Cobb-Douglas coefficient, respectively. Further, $\DA$ and $\DK$ denote climate damages to $A$ and $K$, which are only implicitly time dependent via the global mean temperature $T(\tau)$.
+where $\tau$ is the slow timescale of the IAM (e.g, decadal), and $\DL(T)$ and $\DK(T)$ denote climate damages to labor productivity and capital stock $K$, respectively. The damare only implicitly time dependent via the global mean temperature $T(\tau)$.
 
 \begin{itemize}
 \item \todo{How to apply losses to TFP in Eq.~\eqref{eq:CD}, simply by mulitplying the rhs with a damage factor $\DA(T)$?}
@@ -130,11 +130,13 @@ where $\tau$ is the slow timescale of the IAM (e.g, decadal), and $A$,$K$,$L$,$\
 \subsection{GDP growth rate losses}
 \label{subsec:g}
 Following \citet{BAK19} and \citet{HSI14}, we use panel regressions of the form
+\begin{subequations}
+\label{eq:PLGDP}
 \begin{align}
-  \label{eq:PLGDP}
   g_{j,t}\equiv \ln(\GDP_{j,t})-\ln(\GDP_{j,t-1}) &= \gamma_j + \delta_{t} + \theta_j t + \sum_{l=0}^{L}\beta_{l}P_{j,t-l}+\epsilon_{j,t}\notag\\
-  &= \gN_{j,t}+\delta_{j,t},
+  &= \gN_{j,t}+\delta_{j,t}
 \end{align}
+\end{subequations}
 to capture the effects of climate extremes on county-level growth domestic product $\GDP_{j,t}$, where index $j$ labels the countries, and all time-dependent observables are assumed to vary on the fast (discrete) timescale $t$ of the bio-physical impacts (e.g, annual or monthly).
 In the above equation, the timeseries of $\GDP$ are de-trended log-linearly by accounting for country and year fixed-effects denoted by $\gamma_j$, and $\delta_t$, respectively, as well as for country-specific time trends $\theta_j t$. The persistent effects of climate extremes on $\GDP$ are measured by the coefficients $\beta_l$, where the index $l\in[0,\ldots,L]$ numbers the time-lags up to the maximum lag-time $L$. Further, the $P_{j,t-l}$'s denote the population affected, and standard errors are denoted by $\epsilon_{j,t}$. In the second line of Eq.~\eqref{eq:PLGDP}, we have rewritten the GDP growth rate $g_{r,t}$ at time $t$ as the sum of the growth rate $g_{j,t}^0\equiv\gamma_j\delta_t\theta_j t+\epsilon_{j,t}$ of a reference system that is not perturbed in the time span $t-L,\ldots,t$, and the cumulative growth rate reduction 
 \begin{equation}
@@ -146,27 +148,29 @@ resulting from a series of hazards $\lbrace P_{j,t-m}^i\rbrace_{m=0}^L$ striking
 \begin{itemize}
 \item \todo{People affected for each category may have to be rescaled by their variance or category dependent vulnerability factors may have to be introduced.}
 \end{itemize}
-
+From Eqs.~\eqref{eq:PLGDP}, it follows that the logarithmic GDP path of the perturbed system may be written as
 \begin{subequations}
-  \label{eq:2}
+  \label{eq:GDP}
 \begin{align}
   \ln(\GDP_{j,t})&=\ln(\GDP_{j,t-1})+\gN_{j,t}+\sum_{i=0}^L\beta_iP_{j,t-i}\notag\\
-  &= \ln(\GDP_{j,0})+\sum_{t'=0}^{t-1}\Big[\gN_{t-t'}+\underbrace{\sum_{i=0}^L\beta_iP_{j,t-t'-i}}_{=\delta_{j,t-t'}}\Big]\notag\\
- \Leftrightarrow\qquad\qquad\qquad \langle g \rangle_t&\equiv\ln(\GDP_{j,t})-\ln(\GDP_{j,0})=\sum_{t'=0}^{t-1}\left[\gN_{j,t-t'}+\delta_{j,t-t'}\right]=\sum_{\tilde{t}=1}^{t}\left[\gN_{j,\tilde{t}}+\delta_{j,\tilde{t}}\right]
+  &= \ln(\GDP_{j,0})+\sum_{t'=0}^{t-1}\Big[\gN_{t-t'}+\underbrace{\sum_{i=0}^L\beta_iP_{j,t-t'-i}}_{=\delta_{j,t-t'}}\Big]=\sum_{\tilde{t}=1}^{t}\left[\gN_{j,\tilde{t}}+\delta_{j,\tilde{t}}\right]\notag\\
+ \Leftrightarrow\qquad\qquad\qquad \langle g \rangle_t&\equiv\ln(\GDP_{j,t})-\ln(\GDP_{j,0})=\sum_{\tilde{t}=1}^{t}\left[\gN_{j,\tilde{t}}+\delta_{j,\tilde{t}}\right]\label{subeq:avGrowthRate},
 \end{align}
 \end{subequations}
+where, in Eq.~\eqref{subeq:avGrowthRate}, we have introduced the temporal averaged GDP growth rate for the time period under consideration.
 \subsection{Losses in total factor productivity}
 \label{subsec:TFP}
-For losses of total factor productivity $A_{j,t}$(or any other production factor) on which extreme events are expected to have persistent impacts, we use panel regressions of the form \citet{BAK19}
+Following \citet{BAK19}, we use panel regressions of the form
 \begin{subequations}
 \label{eq:PLTFP}
 \begin{align}
 \ln(A_{j,t}) &= \gamma^{A}_j + \dA_{t} + \theta^{A}_j t + \sum_{l=0}^{\LA}\bA_{l}P_{j,t-l}+\epsilon^{A}_{j,t}\notag\\
              &= \ln(\AN_{j,t})+
-               \ln(\dA_{j,t})=\ln(\AN_{j,t}\dA_{j,t})\label{subeq:PLTFPb}.
+               \ln(\dA_{j,t})=\ln(\AN_{j,t}\dA_{j,t})\label{subeq:PLTFPb}
 \end{align}
 \end{subequations}
-Analogous to Eq.~\eqref{eq:PLGDP}, the timeseries of $A_{j,t}$ are de-trended log-linearly by accounting for country and year fixed-effects denoted by $\gamma^{A}_j$, and $\delta^{A}_t$, respectively, as well as for country-specific time trends $\theta^{A}_j t$. The persistent effects of climate extremes on TFP are measured by the coefficients $\bA_l$, where the index $l\in[0,\ldots,L]$ numbers the time-lags up to the maximum lag-time $\LA$. Standard errors are denoted by $\epsilon^{A}_{j,t}$. In Eq.~\eqref{subeq:PLTFPb}, we have rewritten $\ln(A_{j,t})$ at time $t$ as the sum of the logarithmic TFP of a reference system $\ln(\AN_{j,t})\equiv\gamma^A_j\delta^A_t\theta^A_j t+\epsilon^A_{j,t}$  that is not perturbed in the time span $t-L,\ldots,t$, and the cumulative reduction in logarithmic TFP
+to estimate losses in in total factor productivity $A_{j,t}$ (or any other production factor on which extreme events are expected to have persistent impacts).
+Analogous to Eq.~\eqref{eq:PLGDP}, the timeseries of $A_{j,t}$ are de-trended log-linearly by accounting for country and year fixed-effects denoted by $\gamma^{A}_j$, and $\delta^{A}_t$, respectively, as well as for country-specific time trends $\theta^{A}_j t$. The persistent effects of climate extremes on TFP are measured by the coefficients $\bA_l$, where the index $l\in[0,\ldots,L]$ numbers the time-lags up to the maximum lag-time $\LA$. Standard errors are denoted by $\epsilon^{A}_{j,t}$. In Eq.~\eqref{subeq:PLTFPb}, we have rewritten $\ln(A_{j,t})$  as the sum of the logarithmic TFP, $\ln(\AN_{j,t})\equiv\gamma^A_j+\delta^A_t+\theta^A_j t+\epsilon^A_{j,t}$, of a reference system that is not perturbed during the time span $t-L,\ldots,t$, and the cumulative reduction in logarithmic TFP
 \begin{equation}
   \label{eq:delta}
   \ln\Big(\dA_{j,t}\left(\lbrace P_{j,t-m}^i\rbrace_{m=0}^{\LA}\right)\Big)\equiv \ln\Big(A_{j,t}\left(\lbrace P_{j,t-m}^i\rbrace_{l=0}^{\LA}\right)\Big)-\ln(\AN_{j,t})= \sum_{l=0}^{\LA}\bA_lP_{j,t-l}\quad\forall j,t,
@@ -177,14 +181,14 @@ From Eq.~\eqref{subeq:PLTFPb}, we see that $A_{j,t}$ may be rewritten as
 \begin{equation}
   \label{eq:TFP} A_{j,t}=\AN_{j,t}\dA_{j,t}=\AN_{j,t}\exp\left(\sum_{i=0}^{L}\bA_iP_{j,t-i}\right)\quad\forall j,t.
 \end{equation}
-\subsection{Losses to capital stock}
+\subsection{Losses to the capital stock}
 \label{subsec:K}
-Losses to the capital stock are assumed to be instantaneous, their persistencies are endogenously calculated by the macroeconomic growth model. They are implemented as relative shocks to the capital stock
+Losses to the capital stock are assumed to be instantaneous; their persistencies are endogenously calculated by the macroeconomic growth model. They are implemented as relative shocks to the capital stock $K$,
 \begin{equation}
   \label{eq:dk}
-  \dK_{t}=1-\frac{\Delta K_{t}}{K_{t}}, 
+  \dK_{j.t}\equiv 1-\frac{\Delta K_{j.t}}{K_{j,t}}, 
 \end{equation}
-where $\Delta K_{t}$, denotes the absolute shock to the capital stock at time $t$.
+where $\Delta K_{j,t}\leq 0$, denotes the absolute shock $K_{j,t}$ at time $t$.
 
 % where $\lbrace E\rbrace_{j,t,d}$ denotes a realization $d\in\mbN_d$ of bio-physical hazards for country $j$ up to time $t$ drawn from the ISIMIP impact ensemble. The ISIMIP2b modeling round includes $1$ SSP (SSP2.6), $4$ GCMs and a various number $\mbN_c$ of global impact models for each event category $c\in\mbC$. For each RCP-SSP-GCM combination, we may obtain a unique temperature path providing a bijective\footnote{\tc{red}{Is this true?}} mapping from time $t$ to global mean temperature $T\equiv T(t)$. For each of these temperature paths, we may then derive $\mbN_d\equiv \prod_{c\in\mbC} \mbN_c$ realization of bio-physical hazards from the  ISIMIP simulations.
 
@@ -355,6 +359,48 @@ as well as the marginal response of temperature in region response to emissions
 \item \todo{Emissions should not have a regional index}
 \item \todo{Damages are not explicitly time dependent anymore, only indirect dependence via the regional temperature}
 \end{itemize}
+
+\subsection{Semi-analytic expression for $\SCC$ with capital and TFP losses}
+\label{subsec:analytSCC}
+Let us assume that in each region $r$, capital accumulation can be described by a simple Solow-Swan like equation
+%\begin{subeqations}
+  \begin{equation}
+  \label{eq:Solow}
+    K_{r,t+1} &= (1-\delta_K)\dK_{r,t}K_{r,t}+\underbrace{s\dA_{r,t}\AN_{r,t}\dK_{r,t}K_{r,t}}_{\equiv Y_{r,t}(K_{r,t})}
+    &= (1+\underbrace{s\AN_{r,t}-\delta_K}_{\equiv\gK_{r,t}} +\tdK_{r,t}+\tdA_{r,t})K_{r,t},
+  \end{equation}
+%\end{subeqations}
+  where we have assumed that the production function $Y_{r,t}(K_{r,t})\equiv s \dA_{r,t}\AN_{r,t}\dK_{r,t}K_{r,t}$ is of $A-K$-type. Further, we have introduced  rescaled damage terms for TFP damages, $\tdA_{r,t}\equiv\dA_{r,t}-1$, as well as for damages to the capital stock, $\tdK_{r,t}\equiv\dK_{r,t}-1$. This enables us to rewrite the equation for capital accumulation as a linear difference equation with growth rate  $\gK_{r,t}+\tdK_{r,t}+\tdA_{r,t}$, where $\gK_{r,t}\equiv +s\AN_{r,t}-\delta_K $ denotes the growth rate of the unperturbed growth path (without climate shocks) and the terms $\tdK_{r,t}$ and $\tdA_{r,t}$ describe climate induced deviations from this path.
+
+We may then solve Eq.~  with respect to $K_{r,t}$ yielding (cf.~calculation in Sec.~\ref{subsec:analytSCC}) 
+  
+The latter may be simplified by a coordinate transformation to a frame growing with the rate $g_{n,t}$ of the unperturbed system
+\begin{equation}
+  \label{eq:growFrame}
+  \tilde{Y}_t\equiv\prod_{t'=0}^t\left[1+g_{t'}\right]^{-1}Y_{t'}
+\end{equation}
+Applying this coordinate transformation to Eq.~\eqref{eq:expGrowth} and dropping the regional index $n$ for simplicity, yields
+\begin{align}
+\prod_{t'=0}^t(1+g_{t'})\tilde{Y}_t &= \prod_{t'=0}^{t-1}\big(1+g_{t'}\big)\tilde{Y}_{t-1}\big(1+g_{t'}+\delta_{t'}\big)\notag\\                                   &=\prod_{t'=0}^{t}\big(1+g_{t'}\big)\tilde{Y}_{t-1}\left(1+\frac{\delta_{t'}}{1+g_{t'}}\right)\notag\\
+  \Rightarrow \tilde{Y}_{t} &= \prod_{t'=0}^{t}\left(1+\frac{\delta_{t'}}{1+g_{t'}}\right)Y_0\label{eq:Ytilde},
+\end{align}
+where we have employed the relation $\tilde{Y}_0=Y_0$ in the last line. Transforming Eq.~\eqref{eq:Ytilde} back to the original coordinate system then yields
+\begin{equation}
+  \label{eq:1}
+  Y_t=D_tY^0_t,
+\end{equation}
+where
+\begin{equation}
+  \label{eq:D}
+  D_t\equiv\prod_{t'=0}^{t}\left(1+\frac{\delta_{t'}}{1+g_{t'}}\right)
+\end{equation}
+and
+\begin{equation}
+  \label{eq:YNull}
+ Y^0_t\equiv\prod_{t'=0}^{t} \big(1+g_{t'}\big)Y_0 
+\end{equation}
+ denote cumulative climate damages at time $t$ and the unperturbed growth path, respectively.
+
 
 % \section{Empirical analysis}
 % \label{sec:empAna}
