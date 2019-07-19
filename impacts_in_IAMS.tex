@@ -298,15 +298,15 @@ From Eq.~\eqref{eq:dLdc}, we may derive an expression for $\lambda_{r,t+1}$ in t
 \end{equation}
 which will permit us to simplify the golden rule of capital accumulation.
 \item Golden rule for capital accumulation
-  \begin{align} \pf{L_r}{K_{r,t}}=\lambda_{r,t}\left[\pf{(Y_{r',t'}D_{r'})}{K_{r,t}}+1-\delta_K\right]-\lambda_{r,t-1}&= 0\notag\\
-    \Leftrightarrow\quad 1+\underbrace{\pf{(Y_{r',t'}D_{r'})}{K_{r,t}}-\delta_K}_{\equiv r_{r,t}} &= (1+\rho)\left(\frac{c_{r,t-1}}{c_{r,t}}\right)^{-\eta}\quad\forall\, r,t \label{eq:dLdK}
+  \begin{align} \pf{L_r}{K_{r,t}}=\lambda_{r,t}\left[D_{r,t}\pf{Y_{r,t}}{K_{r,t}}+1-\delta_K\right]-\lambda_{r,t-1}&= 0\notag\\
+    \Leftrightarrow\quad 1+\underbrace{D_{r,t}\pf{Y_{r,t}}{K_{r,t}}-\delta_K}_{\equiv r_{r,t}} &= (1+\rho)\left(\frac{c_{r,t-1}}{c_{r,t}}\right)^{-\eta}\quad\forall\, r,t \label{eq:dLdK}
   \end{align}
 \item Emission tax determines marginal value of emissions for production  
   \begin{equation}
     \label{eq:dLdE} \pf{L_r}{E_{r,t}}=\lambda_{r,t}\left[D_{r,t}\pf{Y_{r,t}}{E_{r,t}}-p_{r,t}\right]\quad\Leftrightarrow\quad p_{r,t}=D_{r,t}\pf{Y_{r,t}}{E_{r,t}} \quad\forall\,r,t 
   \end{equation}
 \end{itemize}
-Also, for deriving the social cost of carbon 
+Also, for deriving the social cost of carbon, we may note the following useful relations 
 \begin{equation}
   \label{eq:Negishi}
   \omega_{r}\approx \frac{c_{r,t}^{\eta}}{N_{t}}\quad\text{with }N_t\equiv\sum_{r'}c_{r',t}^{\eta} \quad\forall\,r,t
@@ -322,7 +322,7 @@ Also, for deriving the social cost of carbon
 \label{sec:Lglob}
 \begin{multline}
   \label{eq:Lglob} \mcL(\T;E_r,c_r)\equiv\sum_{t'=0}^{\T}\sum_{r'}\left[\omega_{r'}N_{r',t'}u\big(c_{r',t'}\big)(1+\rho)^{-t'}\right.\\
-  \left.+\lambda_{r',t'}\left[Y_{r',t'}\big(E_{r',t'}\big)D_{r',t'}\big(T_{r',t'}\big) -c_{r',t'}N_{r',t'}-\left(K_{r',t'}-\big(1-\delta_K\big)K_{r',t'}\right) \right]\right]
+  \left.+\lambda_{r',t'}\left[Y_{r',t'}\big(E_{r',t'}\big)D_{r',t'}\big(T_{r',t'}\big) -c_{r',t'}N_{r',t'}-\left(K_{r',t'+1}-\big(1-\delta_K\big)K_{r',t'}\right) \right]\right]
 \end{multline}
 The first order conditions then read
 \begin{align}
@@ -356,7 +356,7 @@ as well as the marginal response of temperature in region response to emissions
            \end{cases}
 \end{align}
 \begin{itemize}
-\item \todo{Emissions should not have a regional index}
+\item \todo{SCC appear to decrease with increasing Damages}
 \item \todo{Damages are not explicitly time dependent anymore, only indirect dependence via the regional temperature}
 \end{itemize}
 
@@ -366,40 +366,112 @@ Let us assume that in each region $r$, capital accumulation can be described by 
 %\begin{subeqations}
   \begin{equation}
   \label{eq:Solow}
-    K_{r,t+1} &= (1-\delta_K)\dK_{r,t}K_{r,t}+\underbrace{s\dA_{r,t}\AN_{r,t}\dK_{r,t}K_{r,t}}_{\equiv Y_{r,t}(K_{r,t})}
-    &= (1+\underbrace{s\AN_{r,t}-\delta_K}_{\equiv\gK_{r,t}} +\tdK_{r,t}+\tdA_{r,t})K_{r,t},
+    K_{r,t+1} = (1-\delta_K)\dK_{r,t}K_{r,t}+\underbrace{s\dA_{r,t}\AN_{r,t}\dK_{r,t}K_{r,t}}_{\equiv Y_{r,t}(K_{r,t})}
+    = \left(1+\underbrace{s\AN_{r,t}-\delta_K}_{\equiv\gK_{r,t}} +\tdK_{r,t}+\tdA_{r,t}\right)K_{r,t},
   \end{equation}
 %\end{subeqations}
-  where we have assumed that the production function $Y_{r,t}(K_{r,t})\equiv s \dA_{r,t}\AN_{r,t}\dK_{r,t}K_{r,t}$ is of $A-K$-type. Further, we have introduced  rescaled damage terms for TFP damages, $\tdA_{r,t}\equiv\dA_{r,t}-1$, as well as for damages to the capital stock, $\tdK_{r,t}\equiv\dK_{r,t}-1$. This enables us to rewrite the equation for capital accumulation as a linear difference equation with growth rate  $\gK_{r,t}+\tdK_{r,t}+\tdA_{r,t}$, where $\gK_{r,t}\equiv +s\AN_{r,t}-\delta_K $ denotes the growth rate of the unperturbed growth path (without climate shocks) and the terms $\tdK_{r,t}$ and $\tdA_{r,t}$ describe climate induced deviations from this path.
+  where we have assumed that the production function $Y_{r,t}(K_{r,t})\equiv s \dA_{r,t}\AN_{r,t}\dK_{r,t}K_{r,t}$ is of $A-K$-type. Further, we have introduced  rescaled damage terms for TFP damages, $\tdA_{r,t}\equiv\dA_{r,t}-1$, as well as for damages to the capital stock, $\tdK_{r,t}\equiv\dK_{r,t}-1$. This enables us to rewrite the equation for capital accumulation as a linear difference equation with growth rate  $\gK_{r,t}+\tdK_{r,t}+\tdA_{r,t}$, where $\gK_{r,t}\equiv s\AN_{r,t}-\delta_K $ denotes the growth rate of the unperturbed growth path (without climate shocks) and the terms $\tdK_{r,t}$ and $\tdA_{r,t}$ describe climate induced deviations from this path.
 
-We may then solve Eq.~  with respect to $K_{r,t}$ yielding (cf.~calculation in Sec.~\ref{subsec:analytSCC}) 
-  
-The latter may be simplified by a coordinate transformation to a frame growing with the rate $g_{n,t}$ of the unperturbed system
+Analogous to the calculations in in Sec.~\ref{subsec:analytSCC}, we may solve Eq.~\eqref{eq:Solow} which permits to express the perturbed capital stock in terms of the unperturbed one,
 \begin{equation}
-  \label{eq:growFrame}
-  \tilde{Y}_t\equiv\prod_{t'=0}^t\left[1+g_{t'}\right]^{-1}Y_{t'}
-\end{equation}
-Applying this coordinate transformation to Eq.~\eqref{eq:expGrowth} and dropping the regional index $n$ for simplicity, yields
-\begin{align}
-\prod_{t'=0}^t(1+g_{t'})\tilde{Y}_t &= \prod_{t'=0}^{t-1}\big(1+g_{t'}\big)\tilde{Y}_{t-1}\big(1+g_{t'}+\delta_{t'}\big)\notag\\                                   &=\prod_{t'=0}^{t}\big(1+g_{t'}\big)\tilde{Y}_{t-1}\left(1+\frac{\delta_{t'}}{1+g_{t'}}\right)\notag\\
-  \Rightarrow \tilde{Y}_{t} &= \prod_{t'=0}^{t}\left(1+\frac{\delta_{t'}}{1+g_{t'}}\right)Y_0\label{eq:Ytilde},
-\end{align}
-where we have employed the relation $\tilde{Y}_0=Y_0$ in the last line. Transforming Eq.~\eqref{eq:Ytilde} back to the original coordinate system then yields
-\begin{equation}
-  \label{eq:1}
-  Y_t=D_tY^0_t,
+  \label{eq:Solow2}
+  K_{r,t}=\DKA_{r,t}K^0_{r,t}\quad\forall\,r,t,
 \end{equation}
 where
 \begin{equation}
   \label{eq:D}
-  D_t\equiv\prod_{t'=0}^{t}\left(1+\frac{\delta_{t'}}{1+g_{t'}}\right)
+  \DKA_{r,t}\equiv\prod_{t'=0}^{t}\left(1+\frac{\tdK_{r,t}+\tdA_{r,t}}{1+\gK_{t'}}\right)
 \end{equation}
 and
 \begin{equation}
   \label{eq:YNull}
- Y^0_t\equiv\prod_{t'=0}^{t} \big(1+g_{t'}\big)Y_0 
+ K^0_{r,t}\equiv\prod_{t'=0}^{t} \big(1+\gK_{r,t'}\big)K_{r,0} 
 \end{equation}
- denote cumulative climate damages at time $t$ and the unperturbed growth path, respectively.
+ denote cumulative climate damages to the capital stock at time $t$ and the unperturbed growth of the capital stock, respectively.
+
+ \subsubsection{Regional Langrangian for $\SCC$ with capital losses}
+\label{sec:LKAreg}
+From Eq.~\eqref{eq:Solow2}, we see that if the TFP $A_{r,t}$ is not affected by the climate shock and the production function is linear in $K_{r,t,}$ (e.g., of $A-K$ type), we may express the perturbed production as a product of a damage factor $\DK_{r,t}\equiv\equiv\prod_{t'=0}^{t}\left(1+\frac{\tdK_{r,t}}{1+\gK_{r,t'}}\right)$ and the GDP growth path of the unperturbed system $Y^{0}_{r,t}\equiv s A_{r,t}K_{r,t}^0$,
+\begin{equation}
+  \label{eq:GDP2}
+  Y_{r,t}\equiv\DK_{r,t}Y^{0}_{r,t}.
+\end{equation}
+
+\begin{multline}
+  \label{eq:LKAreg} \mcL_r(\T;E_r,c_r)\equiv\sum_{t'=0}^{T}\sum_{r'}\left[\omega_{r'}N_{r',t'}u\big(c_{r',t'}\big)(1+\rho)^{-t'}\right.\\
+  \left.+\lambda_{r',t'}\left[\DK_{r',t'}Y_{r',t'}\big(E_{r',t'}\big) -c_{r',t'}N_{r',t'}-\left(\DK_{r',t'+1}K_{r',t'+1}-\big(1-\delta_K\big)\DK_{r',t'}K_{r',t'}\right)-p_{r,t}E_{r,t} \right]\right],
+\end{multline}
+where we have introduced the regional tax on carbon emissions $p_{r,t}$.
+\begin{itemize}
+\item Note that damages $\DK_{r,t}=\DK_{r,t}(T_{r,t})$ depend only implicitly on time via the regional temperature $T_{r,t}$
+\end{itemize}
+The first order conditions then read
+\begin{itemize}
+\item The Shadow price of consumption $\pf{L_r}{c_{r,t}}$ remains unchanged with respect to Eq.~\eqref{eq:dLdc}.
+
+\item Golden rule for capital accumulation read
+  \begin{align} \pf{L_r}{K_{r,t}}=\lambda_{r,t}\left[\DK_{r,t}\pf{(Y_{r,t})}{K_{r,t}}+(1-\delta_K)\DK_{r,t}\right]-\lambda_{r,t-1}\DK_{r,t-1}&= 0\notag\\
+    \Leftrightarrow\quad \frac{\DK_{r,t}}{\DK_{r,t-1}}\left[1+\pf{Y_{r,t}}{K_{r,t}}-\delta_K\right] &= (1+\rho)\left(\frac{c_{r,t-1}}{c_{r,t}}\right)^{-\eta}\quad\forall\, r,t \label{eq:dLdK}
+  \end{align}
+\todo{we may simplify by assuming $\DK_{r,t-1}\approx\DK_{r,t}$ }
+\item Emission tax determines marginal value of emissions for production  
+  \begin{equation}
+    \label{eq:dLdE} \pf{L_r}{E_{r,t}}=\lambda_{r,t}\left[\pf{Y_{r,t}}{E_{r,t}}-p_{r,t}\right]\quad\Leftrightarrow\quad p_{r,t}=\pf{Y_{r,t}}{E_{r,t}} \quad\forall\,r,t 
+  \end{equation}
+\end{itemize}
+\todo{Here, it appears strange to assume that production depends on emission but not the capital stock if production is simply $Y= sAK$ }
+
+Also, for deriving the social cost of carbon, we may note the following useful relations 
+\begin{equation}
+  \label{eq:Negishi}
+  \omega_{r}\approx \frac{c_{r,t}^{\eta}}{N_{t}}\quad\text{with }N_t\equiv\sum_{r'}c_{r',t}^{\eta} \quad\forall\,r,t
+\end{equation}
+\begin{subequations}
+  \label{eq:lambda}
+\begin{align} \lambda_{r',t'}&=\frac{(1+\rho)^{-t'}}{N_t}\left(\frac{c_{r',t}}{c_{r',t'}}\right)^{\eta}\quad\forall\, r',t',t\label{subeq:delta_rptp}\\
+  \overset{t'=t}{\Rightarrow}\quad
+  \lambda_{r,t}&=\lambda_{t}=\frac{(1+\rho)^{-t}}{N_t}\quad \forall t\label{subeq:delta_rt}
+\end{align}
+\end{subequations}
+\subsubsection{Global Langrangian for $\SCC$ with losses to the capital stock}
+\label{sec:LKglob}
+\begin{multline}
+  \label{eq:LKglob} \mcL(\T;E_r,c_r)\equiv\sum_{t'=0}^{\T}\sum_{r'}\left[\omega_{r'}N_{r',t'}u\big(c_{r',t'}\big)(1+\rho)^{-t'}\right.\\
+  \left.+\lambda_{r',t'}\left[\DK_{r',t'}Y_{r',t'}\big(E_{r',t'}\big) -c_{r',t'}N_{r',t'}-\left(\DK_{r',t'+1}\big(T_{r',t'+1}\big)K_{r',t'+1}-\big(1-\delta_K\big)\DK_{r',t'}\big(T_{r',t'}\big)K_{r',t'}\right) \right]\right]
+\end{multline}
+The first order conditions with respect to emissions then reads
+% \begin{align}
+%   \label{eq:partE}
+%   \frac{\partial\mcL}{\partial E_{r,t}} &= \lambda_{r,t}\underbrace{\frac{\partial Y_{r,t}}{\partial E_{r,t}}}_{=p_{r,t}}+ \sum_{t'=0}^{\T}\sum_{r'}\lambda_{r',t'}\left[Y_{r',t'}\frac{\partial \DK_{r',t'}}{\partial E_{r,t}}-\pf{\DK_{r',t'+1}}{E_{r,t}}K_{r',t'+1}+(1-\delta_K)\pf{\DK_{r',t'}}{E_{r,t}}K_{r',t'}\right]=0\quad\forall\,r,t\notag\\
+%   \Rightarrow \quad p_{r,t} &= -\lambda_{r,t}^{-1}\sum_{t'=0}^{\T}\sum_{r'}\lambda_{r',t'}\left[\left(Y_{r',t'}+(1-\delta_K)K_{r',t'}\right)\pf{\DK_{r',t'}}{ E_{r,t}}-K_{r',t'+1}\pf{\DK_{r',t'+1}}{E_{r,t}}\right]\notag\\
+%                                         &=                                          -\lambda_{r,t}^{-1}\sum_{t'=0}^{\T}\sum_{r'}\lambda_{r',t'}\left[\left[Y_{r',t'}+(1-\delta_K)K_{r',t'}-K_{r',t'+1}(1+\gK_{r',t'+1}+\dK_{r',t'+1})\right]\pf{\DK_{r',t'}}{ E_{r,t}}-K_{r',t'+1}\DK_{r',t'}(1+\gK_{r',t'+1})^{-1}\pf{\dK_{r',t+1}}{E_{r,t}}\right]\notag\\
+%                                         &=                                          -\lambda_{r,t}^{-1}\sum_{t'=0}^{\T}\sum_{r'}\lambda_{r',t'}Y_{r',t'}\frac{\partial }{\partial E_{r,t}}\left[\prod_{t''=0}^{t'}\left[1+\frac{\delta_{r',t''}\left(\sum_{\tilde{t}=0}^{t''}E_{r',\tilde{t}}\right)}{1+g_{r,t''}} \right] \right]\notag\\
+%                                          &=-\lambda_{r,t}^{-1}\sum_{t'=t}^{\T}\sum_{r'}\lambda_{r',t'}Y_{r',t'} \sum_{t''=t}^{t'}\big(1+g_{n,t''}\big)^{-1}\pf{\delta_{r',t''}}{E_{r,t}}\prod_{\tilde{t}=0,\tilde{t}\neq t''}^{t'}\left[1+\frac{\delta_{r',\tilde{t}}}{1+g_{r,\tilde{t}}} \right]\notag\\
+%                                          &=-\lambda_{r,t}^{-1}\sum_{t'=t}^{\T}\sum_{r'}\lambda_{r',t'}Y_{r',t'}\underbrace{\prod_{\tilde{t}=0}^{t'}\left[1+\frac{\delta_{r',\tilde{t}}}{1+g_{r,\tilde{t}}}\right]}_{=D_{r',t'}}\sum_{t''=t}^{t'}\underbrace{(1+g_{r',t''}+\delta_{r',t''})^{-1}\pf{\delta_{r',t''}}{T_{r',t''}}}_{\equiv -\Theta_{r',t''}}\underbrace{\pf{T_{r',t''}}{E_{r,t}}}_{\equiv\Delta T_{r',t'',r,t}}\notag\\
+% &= \sum_{t'=t}^{\T}\sum_{r'}\Phi_{r',t',t}Y_{r',t'}D_{r',t'}\sum_{t''=t}^{t'}\Theta_{r',t''}\Delta T_{r',t'',r,t},  
+% \end{align}
+\begin{align}
+  \label{eq:partE}
+  \frac{\partial\mcL}{\partial E_{r,t}} &= \lambda_{r,t}\underbrace{\frac{\partial Y_{r,t}}{\partial E_{r,t}}}_{=p_{r,t}}+ \sum_{t'=0}^{\T}\sum_{r'}\lambda_{r',t'}\left[Y_{r',t'}\frac{\partial \DK_{r',t'}}{\partial E_{r,t}}-\pf{\DK_{r',t'+1}}{E_{r,t}}K_{r',t'+1}+(1-\delta_K)\pf{\DK_{r',t'}}{E_{r,t}}K_{r',t'}\right]=0\quad\forall\,r,t\notag\\
+  \Rightarrow \quad p_{r,t} &= -\lambda_{r,t}^{-1}\sum_{t'=0}^{\T}\sum_{r'}\lambda_{r',t'}\left[\left(Y_{r',t'}+(1-\delta_K)K_{r',t'}\right)\pf{\DK_{r',t'}}{ E_{r,t}}-K_{r',t'+1}\pf{\DK_{r',t'+1}}{E_{r,t}}\right]\notag\\
+                                        &=                                          -\lambda_{r,t}^{-1}\sum_{r'}\left[\sum_{t'=0}^{\T}\lambda_{r',t'}\left[Y_{r',t'}+(1-\delta_K)K_{r',t'}\right]\pf{\DK_{r',t'}}{ E_{r,t}}- \sum_{t'=0}^{\T} \lambda_{r',t'}K_{r',t'+1}\pf{\DK_{r',t+1}}{E_{r,t}}\right]\notag\\
+                                        &=                                          \lambda_{r,t}^{-1}\sum_{r'}\left[\sum_{t'=t}^{\T}\lambda_{r',t'}\left[Y_{r',t'}+(1-\delta_K)K_{r',t'}\right]\DK_{r',t'}\sum_{\tilde{t}=t}^{t'}\Theta^{K}_{r',\tilde{t}}\Delta T_{r',\tilde{t},r,t}\right.\\
+                                        &\qquad\,\left.-\sum_{t'=t+1}^{\T}\lambda_{r',t'}K_{r',t'+1}\DK_{r',t'}\sum_{\tilde{t}=t+1}^{t'}\Theta^{K}_{r',\tilde{t}}\Delta T_{r',\tilde{t},r,t}\right]\notag\\
+  &=
+\lambda_{r,t}^{-1}\sum_{r'}\left[\sum_{t'=t}^{\T}\lambda_{r',t'}\left[Y_{r',t'}+(1-\delta_K)K_{r',t'}\right]\DK_{r',t'}\sum_{\tilde{t}=t}^{t'}\Theta^{K}_{r',\tilde{t}}\Delta T_{r',\tilde{t},r,t}\right.\\ &\qquad\,\left.-\sum_{t'=t}^{\T}\lambda_{r',t'+1}K_{r',t'}\DK_{r',t'+1}\sum_{\tilde{t}=t+1}^{t'-1}\Theta^{K}_{r',\tilde{t}}\Delta T_{r',\tilde{t},r,t}\right]\notag\\                                         % -\lambda_{r,t}^{-1}\sum_{t'=0}^{\T}\sum_{r'}\lambda_{r',t'}Y_{r',t'}\frac{\partial }{\partial E_{r,t}}\left[\prod_{t''=0}^{t'}\left[1+\frac{\delta_{r',t''}\left(\sum_{\tilde{t}=0}^{t''}E_{r',\tilde{t}}\right)}{1+g_{r,t''}} \right] \right]\notag\\
+%                                          &=-\lambda_{r,t}^{-1}\sum_{t'=t}^{\T}\sum_{r'}\lambda_{r',t'}Y_{r',t'} \sum_{t''=t}^{t'}\big(1+g_{n,t''}\big)^{-1}\pf{\delta_{r',t''}}{E_{r,t}}\prod_{\tilde{t}=0,\tilde{t}\neq t''}^{t'}\left[1+\frac{\delta_{r',\tilde{t}}}{1+g_{r,\tilde{t}}} \right]\notag\\
+%                                          &=-\lambda_{r,t}^{-1}\sum_{t'=t}^{\T}\sum_{r'}\lambda_{r',t'}Y_{r',t'}\underbrace{\prod_{\tilde{t}=0}^{t'}\left[1+\frac{\delta_{r',\tilde{t}}}{1+g_{r,\tilde{t}}}\right]}_{=D_{r',t'}}\sum_{t''=t}^{t'}\underbrace{(1+g_{r',t''}+\delta_{r',t''})^{-1}\pf{\delta_{r',t''}}{T_{r',t''}}}_{\equiv -\Theta_{r',t''}}\underbrace{\pf{T_{r',t''}}{E_{r,t}}}_{\equiv\Delta T_{r',t'',r,t}}\notag\\
+% &= \sum_{t'=t}^{\T}\sum_{r'}\Phi_{r',t',t}Y_{r',t'}D_{r',t'}\sum_{t''=t}^{t'}\Theta_{r',t''}\Delta T_{r',t'',r,t},  
+\end{align}
+where we have introduced the marginal change of the capital growth rate with temperature
+\begin{equation}
+  \label{eq:ThetaK}
+  \Theta^K_{r,t}\equiv - (1+\gK_{r,t}+\dK_{r,t})^{-1}\pf{\dK_{r,t}}{T_{r,t}}.
+\end{equation}
+\begin{itemize}
+\item \todo{Damages are not explicitly time dependent anymore, only indirect dependence via the regional temperature}
+\item \todo{May be simplified by assuming that damages $\DK$, marginal changes $\Theta^K$, and $\Delta T$ vary slow compared to the timescale $t$, i.e., we may write $\DK_{r,t}\approx \DK_{r,t+1}$ etc. This should actually be a good approximation because all three terms are not directly time dependent and vary only on the slow timescale of the regional temperature.}
+\end{itemize}
 
 
 % \section{Empirical analysis}
