@@ -26,6 +26,7 @@
 \displaywidowpenalty = 10000
 %Additional packages
 \usepackage{lmodern}
+\usepackage{verbatim}
 \usepackage{supertabular}
 \usepackage{amsmath,amssymb}
 \usepackage[utf8x]{inputenc}
@@ -267,7 +268,7 @@ which will permit us to simplify the golden rule of capital accumulation.
 \label{sec:Lglob}
 \begin{multline}
   \label{eq:Lglob} \mcL(\T;E_r,c_r)\equiv\sum_{t'=0}^{\T}\sum_{r'}\left[\omega_{r'}N_{r',t'}u\big(c_{r',t'}\big)(1+\rho)^{-t'}\right.\\
-  \left.+\lambda_{r',t'}\left[Y_{r',t'}\big(E_{r',t'}\big)D_{r',t'}\big(T_{r',t'}\big) -c_{r',t'}N_{r',t'}-\left(K_{r',t'}-\big(1-\delta_K\big)K_{r',t'}\right) \right]\right]
+  \left.+\lambda_{r',t'}\left[Y_{r',t'}\big(E_{r',t'}\big)D_{r',t'}\big(T_{r',t'}\big) -c_{r',t'}N_{r',t'}-\left(K_{r',t'+1}-\big(1-\delta_K\big)K_{r',t'}\right) \right]\right]
 \end{multline}
 The first order conditions then read
 \begin{align}
@@ -296,6 +297,9 @@ as well as the marginal response of temperature in region response to emissions
 \item \todo{Emissions should not have a regional index}
 \item \todo{Damages are not explicitly time dependent anymore, only indirect dependence via the regional temperature}
 \end{itemize}
+
+
+
 \section*{Bibliography}
 %\bibliography{/home/christian/EXPACT/mendeley_libaries/ownPapers-acclimate_price_model.bib}
 \bibliography{lib.bib}
