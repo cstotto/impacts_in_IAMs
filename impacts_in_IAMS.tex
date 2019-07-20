@@ -21,8 +21,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%
 
 %\smartqed  % flush right qed marks, \eg at endof proof
-\clubpenalty = 10000 % Schusterjungen
-\widowpenalty = 10000 % Hurenkinder
+\clubpenalty = 10000 
+\widowpenalty = 10000
 \displaywidowpenalty = 10000
 %Additional packages
 \usepackage{lmodern}
@@ -112,21 +112,21 @@
 
 %\newpage
 
-\section{Setting}
+\section{Integrated assessment models}
 \label{sec:set}
-The production system in integrated assessment models (IAMs) is often described by an aggregate production function of constant-elasticity of substition type
+The production system in integrated assessment models (IAMs) is often described by an aggregate production function of constant-elasticity of substition type \cite{BAU17} 
 \begin{equation}
   \label{eq:CD}
-  Y(\tau,T)\equiv \left[\xi_K(\theta_K \DK(T)K)^{\rho_Y}+\xi_L(\DL(T)\theta_LL)^{\rho_Y}+\xi_E\theta_\E\E)^{\rho_Y}\right]^{\frac{1}{\rho_Y}}
+  Y(\tau,T)\equiv \DA(T)A(\tau)\left[\xi_K(\theta_K \DK(T)K)^{\rho_Y}+\xi_L(\DL(T)\theta_LL)^{\rho_Y}+\xi_E\theta_\E\E)^{\rho_Y}\right]^{\frac{1}{\rho_Y}}
 \end{equation}
-where $\tau$ is the slow timescale of the IAM (e.g, decadal), and $\DL(T)$ and $\DK(T)$ denote climate damages to labor productivity and capital stock $K$, respectively. The damare only implicitly time dependent via the global mean temperature $T(\tau)$.
-
+where $\tau$ and $T$ are the slow timescale of the IAM (e.g, decadal) and the global mean temperature, respectively. Further, $\xi_K$, $\xi_L$, and $\xi_E$ denote shares of the production factors capital $K$, labor $L$, and $energy$, respectively, and $\theta_K$, $\theta_L$, and $\theta_E$ denote capital, labor and energy efficiencies. The intertemporal elasticity of substitution is denoted by $\rho_Y$. Damages to total factor productivity $A$, capital stock$ K$, and labor productivity $\theta_L$ are denoted by $\DA$, $\DK$, and $\DL$, respectively. They are only implicitly time dependent via the global mean temperature $T$. 
 \begin{itemize}
-\item \todo{How to apply losses to TFP in Eq.~\eqref{eq:CD}, simply by mulitplying the rhs with a damage factor $\DA(T)$?}
+\item \todo{So far, the capital stock is the only impact channel for which it make sense to derive impact channel specific losses, because capital shock can trigger investment decisions.}
 \end{itemize}
-
 \section{Empirical analysis}
 \label{sec:empAna}
+In this section, we discuss how the damage terms $\DK$, $\DA$, and as well as losses to the GDP growth rate can be derived by regressing economic data with hazard indicators derived from the ISMIP impact model simulations. Since, we aim to apply these damages to different IAM realizations, i.e., different scenarios for capital accumulations, etc., it is key to consider relative damages only.
+
 \subsection{GDP growth rate losses}
 \label{subsec:g}
 Following \citet{BAK19} and \citet{HSI14}, we use panel regressions of the form
@@ -138,7 +138,7 @@ Following \citet{BAK19} and \citet{HSI14}, we use panel regressions of the form
 \end{align}
 \end{subequations}
 to capture the effects of climate extremes on county-level growth domestic product $\GDP_{j,t}$, where index $j$ labels the countries, and all time-dependent observables are assumed to vary on the fast (discrete) timescale $t$ of the bio-physical impacts (e.g, annual or monthly).
-In the above equation, the timeseries of $\GDP$ are de-trended log-linearly by accounting for country and year fixed-effects denoted by $\gamma_j$, and $\delta_t$, respectively, as well as for country-specific time trends $\theta_j t$. The persistent effects of climate extremes on $\GDP$ are measured by the coefficients $\beta_l$, where the index $l\in[0,\ldots,L]$ numbers the time-lags up to the maximum lag-time $L$. Further, the $P_{j,t-l}$'s denote the population affected, and standard errors are denoted by $\epsilon_{j,t}$. In the second line of Eq.~\eqref{eq:PLGDP}, we have rewritten the GDP growth rate $g_{r,t}$ at time $t$ as the sum of the growth rate $g_{j,t}^0\equiv\gamma_j\delta_t\theta_j t+\epsilon_{j,t}$ of a reference system that is not perturbed in the time span $t-L,\ldots,t$, and the cumulative growth rate reduction 
+In the above equation, the timeseries of $\GDP$ are de-trended log-linearly by accounting for country and year fixed-effects denoted by $\gamma_j$, and $\delta_t$, respectively, as well as for country-specific time trends $\theta_j t$. The persistent effects of climate extremes on $\GDP$ are measured by the coefficients $\beta_l$, where the index $l\in[0,\ldots,L]$ numbers the time-lags up to the maximum lag-time $L$. Further, the $P_{j,t-l}$'s denote the population affected, and standard errors are denoted by $\epsilon_{j,t}$. In the second line of Eq.~\eqref{eq:PLGDP}, we have rewritten the GDP growth rate $g_{r,t}$ at time $t$ as the sum of the growth rate $g_{j,t}^0\equiv\gamma_j+\delta_t+\theta_j t+\epsilon_{j,t}$ of a reference system that is not perturbed in the time span $t-L,\ldots,t$, and the cumulative growth rate reduction 
 \begin{equation}
   \label{eq:delta}
   \delta_{j,t}\left(\lbrace P_{j,t-m}^i\rbrace_{m=0}^L\right)\equiv g_{j,t}\left(\lbrace P_{j,t-m}^i\rbrace_{l=0}^L\right)-g_{j,t}^0= \sum_{l=0}^L\beta_lP_{j,t-l}\quad\forall j,t,
@@ -147,6 +147,7 @@ resulting from a series of hazards $\lbrace P_{j,t-m}^i\rbrace_{m=0}^L$ striking
 
 \begin{itemize}
 \item \todo{People affected for each category may have to be rescaled by their variance or category dependent vulnerability factors may have to be introduced.}
+\item \todo{The damage notation may be misleading, since $\delta_{j,t}$ are only country dependent due to the impact realisation. The loss coefficients $\beta_l$ are the same for all countries or groups of countries. However, we may apply the regressions to sub-groups of countries, e.g., developing countries or OECD countries as done in \cite{BER16a,BER18}.}
 \end{itemize}
 From Eqs.~\eqref{eq:PLGDP}, it follows that the logarithmic GDP path of the perturbed system may be written as
 \begin{subequations}
@@ -190,37 +191,57 @@ Losses to the capital stock are assumed to be instantaneous; their persistencies
 \end{equation}
 where $\Delta K_{j,t}\leq 0$, denotes the absolute shock $K_{j,t}$ at time $t$.
 
+\section{From time to temperature dependent impacts}
+The ISIMIP2b modeling round includes $2$ RCPs (RCP2.6,RCP6.0),  $4$ GCMs, $1$ SSPs (SSP2), and a various number $\mbN_c$ of global impact models for each event category $c\in\mbC$.
+We expect that impacts scale with global mean temperature (determined by the RCP-GCM) combination and with socioeconomic development (determined by the SSP). However, there is a good chance that the temperature scaling is universal, and the dependence of relative impacts on the RCP is negligible.  
+Thus for each RCP-SSP combination, we obtain $4\times c$ impact timeseries for each sector $c$. We first group countries according to the world regions of $r$ the IAM. We then check for a possible scaling of the regional damages with global (annual?) mean temperature or with (regional/national annual?) mean temperature by, separately for each region, regressing the country level damages with global mean temperature
+\begin{equation}
+  \label{eq:deltaT}
+  \delta_{j,t} = \gT_j + \beta^T_0T + \beta^T_1 T^2,
+\end{equation}
+where $\gamma_j$ capture country level fixed damage levels, and $\bT_0$ and $\bT_1$, denote the coefficients for the linear and quadratic temperature dependence, respectively. For simplicity, we have dropped the superscipts denoting the type of damages (e.g., GDP growth reduction, TFP reductions, and losses to the capital stock).
+
+% \section{From time to temperature dependent impacts}
+% Future ISIMIP impact simulations are driven by RCP-GCM scenario combinations. For a given socioeconomic development scenario, these define bijective mappings from time $t$  to global mean temperature $T\equiv T(t)$. Thus, we may fit the damages terms $\delta_{j,t}$, $\dK_{j,t}$, and $\dA_{j,t}$ in terms of $T$, to obtain smooth temperature dependent damage functions denoted by $\delta_{j,T},\dK_{j,T}$, and $\dA_{j,T}$.
+
+
+
+%  employ these damages functions not only for the RCP-GCM determined temperatures paths they were derived from, but also for the temperature paths 
+
+% Let$\Delta T\equiv T(t_f)-T(t_0)$ with $t_f>t_0$ denote the interval of global mean temperature of interest. We then subdivide $\Delta T$ into $N_b$ equidistant bins $\Delta T_b$ of width $\Delta T/N_b$. Since the mapping from time to global mean temperature is bijective, we obtain for each temperature bin and each realization $\lbrace E\rbrace_{j,t,d}$ the associated set of cumulative damages as
+
+
+% The ISIMIP2b modeling round includes $1$ SSP (SSP2.6), $4$ GCMs and a various number $\mbN_c$ of global impact models for each event category $c\in\mbC$. For each RCP-SSP-GCM combination, we may obtain a unique temperature path providing a bijective mapping from time $t$ to global mean temperature . For each of these temperature paths, we may then derive $\mbN_d\equiv \prod_{c\in\mbC} \mbN_c$ realization of bio-physical hazards from the  ISIMIP simulations.
+
+
+% \begin{equation}
+%   \label{eq:DDA}
+%   \mbDA_{j,d}(\Delta T_b)\equiv\lbrace \DA_{j,t,d}\, \vert\, t' \text{ for } T(t')\in\Delta T_b \rbrace.
+% \end{equation}
+% To obtain relative TFP reductions that can be plugged into the IAM production function (cf.~Eq.~\eqref{eq:CD}), we have to take ensemble averages over (i) the members of the set $\mbDA_{j,d}(\Delta T_d)$ and (ii) the different realizations of biophysical hazards $\mbN_d$,
+% \begin{equation}
+%   \label{eq:avDA}
+%   \langle \DA_{j}\rangle(\Delta T_b)\equiv\big\langle\langle \DA_{j,t,d}\rangle_{\mbN_D}\big\rangle_{\mbDA_{j}}(\Delta T_b).
+% \end{equation}
+% where $\langle\cdot\rangle$ denotes the ensemble average.
+
+% \begin{itemize}
+% \item Does the order in which we take the averages matter?
+% \end{itemize}
+
+%\section{Averaging over different impact realization}
 % where $\lbrace E\rbrace_{j,t,d}$ denotes a realization $d\in\mbN_d$ of bio-physical hazards for country $j$ up to time $t$ drawn from the ISIMIP impact ensemble. The ISIMIP2b modeling round includes $1$ SSP (SSP2.6), $4$ GCMs and a various number $\mbN_c$ of global impact models for each event category $c\in\mbC$. For each RCP-SSP-GCM combination, we may obtain a unique temperature path providing a bijective\footnote{\tc{red}{Is this true?}} mapping from time $t$ to global mean temperature $T\equiv T(t)$. For each of these temperature paths, we may then derive $\mbN_d\equiv \prod_{c\in\mbC} \mbN_c$ realization of bio-physical hazards from the  ISIMIP simulations.
 
-\section{Temperature dependence of impacts}
-Let  $\Delta T\equiv T(t_f)-T(t_0)$ with $t_f>t_0$ denote the interval of global mean temperature of interest. We then subdivide $\Delta T$ into $N_b$ equidistant bins $\Delta T_b$ of width $\Delta T/N_b$. Since the mapping from time to global mean temperature is bijective, we obtain for each temperature bin and each realization $\lbrace E\rbrace_{j,t,d}$ the associated set of cumulative damages as
-\begin{equation}
-  \label{eq:DDA}
-  \mbDA_{j,d}(\Delta T_b)\equiv\lbrace \DA_{j,t,d}\, \vert\, t' \text{ for } T(t')\in\Delta T_b \rbrace.
-\end{equation}
-To obtain relative TFP reductions that can be plugged into the IAM production function (cf.~Eq.~\eqref{eq:CD}), we have to take ensemble averages over (i) the members of the set $\mbDA_{j,d}(\Delta T_d)$ and (ii) the different realizations of biophysical hazards $\mbN_d$,
-\begin{equation}
-  \label{eq:avDA}
-  \langle \DA_{j}\rangle(\Delta T_b)\equiv\big\langle\langle \DA_{j,t,d}\rangle_{\mbN_D}\big\rangle_{\mbDA_{j}}(\Delta T_b).
-\end{equation}
-where $\langle\cdot\rangle$ denotes the ensemble average.
 
-\begin{itemize}
-\item Does the order in which we take the averages matter?
-\end{itemize}
-
-\section{Regional integration}
-\label{sec:regInt}
-Since most IAMs operate on the level of world regions $r\in\mbN_r$, we have to average Eq.~\eqref{eq:avDA} over the countries $j$ belonging to each region $r$ (weighted by average population or GDP or asset stock\footnote{\tc{red}{To be discussed!}})  in order to obtain damages $\langle \DA_{r}\rangle(\Delta T_b)$ for the time period associated with $\Delta T_b$.
-
-
-
+% \section{Regional integration}
+% \label{sec:regInt}
+% Since most IAMs operate on the level of world regions $r\in\mbN_r$, we have to average Eq.~\eqref{eq:avDA} over the countries $j$ belonging to each region $r$ (weighted by average population or GDP or asset stock\footnote{\tc{red}{To be discussed!}})  in order to obtain damages $\langle \DA_{r}\rangle(\Delta T_b)$ for the time period associated with $\Delta T_b$.
 
 \section{Social Cost of Carbon}
 \label{sec:SCC}
 
 \begin{itemize}
-\item modularization
+\item Modularization of economic system, impacts and energy system
 \end{itemize}
 An alternative approach to integrate climate impacts into IAMs is to first derive and analytical formula for the social cost of carbon $\SCC$ and soft couple it with the IAM, and the climate module.
 
@@ -458,7 +479,7 @@ The first order conditions with respect to emissions then reads
                                         &=                                          \lambda_{r,t}^{-1}\sum_{r'}\left[\sum_{t'=t}^{\T}\lambda_{r',t'}\left[Y_{r',t'}+(1-\delta_K)K_{r',t'}\right]\DK_{r',t'}\sum_{\tilde{t}=t}^{t'}\Theta^{K}_{r',\tilde{t}}\Delta T_{r',\tilde{t},r,t}\right.\\
                                         &\qquad\,\left.-\sum_{t'=t+1}^{\T}\lambda_{r',t'}K_{r',t'+1}\DK_{r',t'}\sum_{\tilde{t}=t+1}^{t'}\Theta^{K}_{r',\tilde{t}}\Delta T_{r',\tilde{t},r,t}\right]\notag\\
   &=
-\lambda_{r,t}^{-1}\sum_{r'}\left[\sum_{t'=t}^{\T}\lambda_{r',t'}\left[Y_{r',t'}+(1-\delta_K)K_{r',t'}\right]\DK_{r',t'}\sum_{\tilde{t}=t}^{t'}\Theta^{K}_{r',\tilde{t}}\Delta T_{r',\tilde{t},r,t}\right.\\ &\qquad\,\left.-\sum_{t'=t}^{\T}\lambda_{r',t'+1}K_{r',t'}\DK_{r',t'+1}\sum_{\tilde{t}=t+1}^{t'-1}\Theta^{K}_{r',\tilde{t}}\Delta T_{r',\tilde{t},r,t}\right]\notag\\                                         % -\lambda_{r,t}^{-1}\sum_{t'=0}^{\T}\sum_{r'}\lambda_{r',t'}Y_{r',t'}\frac{\partial }{\partial E_{r,t}}\left[\prod_{t''=0}^{t'}\left[1+\frac{\delta_{r',t''}\left(\sum_{\tilde{t}=0}^{t''}E_{r',\tilde{t}}\right)}{1+g_{r,t''}} \right] \right]\notag\\
+\lambda_{r,t}^{-1}\sum_{r'}\left[\sum_{t'=t}^{\T}\lambda_{r',t'}\left[Y_{r',t'}+(1-\delta_K)K_{r',t'}\right]\DK_{r',t'}\sum_{\tilde{t}=t}^{t'}\Theta^{K}_{r',\tilde{t}}\Delta T_{r',\tilde{t},r,t}\right.\\ &\qquad\,\left.-\sum_{t'=t}^{\T-1}\lambda_{r',t'+1}K_{r',t'}\DK_{r',t'+1}\sum_{\tilde{t}=t+1}^{t'-1}\Theta^{K}_{r',\tilde{t}}\Delta T_{r',\tilde{t},r,t}\right]\notag\\                                         % -\lambda_{r,t}^{-1}\sum_{t'=0}^{\T}\sum_{r'}\lambda_{r',t'}Y_{r',t'}\frac{\partial }{\partial E_{r,t}}\left[\prod_{t''=0}^{t'}\left[1+\frac{\delta_{r',t''}\left(\sum_{\tilde{t}=0}^{t''}E_{r',\tilde{t}}\right)}{1+g_{r,t''}} \right] \right]\notag\\
 %                                          &=-\lambda_{r,t}^{-1}\sum_{t'=t}^{\T}\sum_{r'}\lambda_{r',t'}Y_{r',t'} \sum_{t''=t}^{t'}\big(1+g_{n,t''}\big)^{-1}\pf{\delta_{r',t''}}{E_{r,t}}\prod_{\tilde{t}=0,\tilde{t}\neq t''}^{t'}\left[1+\frac{\delta_{r',\tilde{t}}}{1+g_{r,\tilde{t}}} \right]\notag\\
 %                                          &=-\lambda_{r,t}^{-1}\sum_{t'=t}^{\T}\sum_{r'}\lambda_{r',t'}Y_{r',t'}\underbrace{\prod_{\tilde{t}=0}^{t'}\left[1+\frac{\delta_{r',\tilde{t}}}{1+g_{r,\tilde{t}}}\right]}_{=D_{r',t'}}\sum_{t''=t}^{t'}\underbrace{(1+g_{r',t''}+\delta_{r',t''})^{-1}\pf{\delta_{r',t''}}{T_{r',t''}}}_{\equiv -\Theta_{r',t''}}\underbrace{\pf{T_{r',t''}}{E_{r,t}}}_{\equiv\Delta T_{r',t'',r,t}}\notag\\
 % &= \sum_{t'=t}^{\T}\sum_{r'}\Phi_{r',t',t}Y_{r',t'}D_{r',t'}\sum_{t''=t}^{t'}\Theta_{r',t''}\Delta T_{r',t'',r,t},  
@@ -522,7 +543,6 @@ where we have introduced the marginal change of the capital growth rate with tem
 % \section{Regional integration}
 % \label{sec:regInt}
 % Since most IAMs operate on the level of world regions $r\in\mbN_r$, we have to average Eq.~\eqref{eq:avDA} over the countries $j$ belonging to each region $r$ (weighted by average population or GDP or asset stock\footnote{\tc{red}{To be discussed!}})  in order to obtain damages $\langle \DA_{r}\rangle(\Delta T_b)$ for the time period associated with $\Delta T_b$.
-
 
 
 
