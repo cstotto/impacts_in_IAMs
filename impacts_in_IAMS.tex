@@ -193,13 +193,13 @@ where $\Delta K_{j,t}\leq 0$, denotes the absolute shock $K_{j,t}$ at time $t$.
 
 \section{From time to temperature dependent impacts}
 The ISIMIP2b modeling round includes $2$ RCPs (RCP2.6,RCP6.0),  $4$ GCMs, $1$ SSPs (SSP2), and a various number $\mbN_c$ of global impact models for each event category $c\in\mbC$.
-We expect that impacts scale with global mean temperature (determined by the RCP-GCM) combination and with socioeconomic development (determined by the SSP). However, there is a good chance that the temperature scaling is universal, and the dependence of relative impacts on the RCP is negligible.  
-Thus for each RCP-SSP combination, we obtain $4\times c$ impact timeseries for each sector $c$. We first group countries according to the world regions of $r$ the IAM. We then check for a possible scaling of the regional damages with global (annual?) mean temperature or with (regional/national annual?) mean temperature by, separately for each region, regressing the country level damages with global mean temperature
+We expect that impacts scale with global mean temperature (determined by the RCP-GCM) combination and with socioeconomic development (determined by the SSP). However, there is a good chance that the temperature scaling is universal, and the dependence of relative impacts on the RCP and also the SSP may be negligible.  
+Thus for each RCP-SSP combination, we obtain $4\times c$ impact timeseries for each sector $c$. We first group countries according to the world regions of $r$ the IAM. We then check for a possible scaling of the regional damages with global (annual?) mean temperature or with (regional/national annual?) mean temperature by, separately for each region, regressing the country level damages with mean temperature 
 \begin{equation}
   \label{eq:deltaT}
-  \delta_{j,t} = \gT_j + \beta^T_0T + \beta^T_1 T^2,
+  \delta_{j,t} = \gamma^T_j + \beta^T_0T_{r,t} + \beta^T_1 T^2_{r,t},
 \end{equation}
-where $\gamma_j$ capture country level fixed damage levels, and $\bT_0$ and $\bT_1$, denote the coefficients for the linear and quadratic temperature dependence, respectively. For simplicity, we have dropped the superscipts denoting the type of damages (e.g., GDP growth reduction, TFP reductions, and losses to the capital stock).
+where $\gamma_j^T$ capture country level fixed damage levels, and $\beta^T_0$ and $\beta^T_1$, denote the coefficients for the linear and quadratic temperature dependence, respectively. For simplicity, we have dropped the superscipts denoting the type of damages (e.g., GDP growth reduction, TFP reductions, and losses to the capital stock).
 
 % \section{From time to temperature dependent impacts}
 % Future ISIMIP impact simulations are driven by RCP-GCM scenario combinations. For a given socioeconomic development scenario, these define bijective mappings from time $t$  to global mean temperature $T\equiv T(t)$. Thus, we may fit the damages terms $\delta_{j,t}$, $\dK_{j,t}$, and $\dA_{j,t}$ in terms of $T$, to obtain smooth temperature dependent damage functions denoted by $\delta_{j,T},\dK_{j,T}$, and $\dA_{j,T}$.
@@ -381,17 +381,17 @@ as well as the marginal response of temperature in region response to emissions
 \item \todo{Damages are not explicitly time dependent anymore, only indirect dependence via the regional temperature}
 \end{itemize}
 
-\subsection{Semi-analytic expression for $\SCC$ with capital and TFP losses}
+\subsection{Semi-analytic expression for $\SCC$ with capital losses}
 \label{subsec:analytSCC}
 Let us assume that in each region $r$, capital accumulation can be described by a simple Solow-Swan like equation
 %\begin{subeqations}
   \begin{equation}
   \label{eq:Solow}
-    K_{r,t+1} = (1-\delta_K)\dK_{r,t}K_{r,t}+\underbrace{s\dA_{r,t}\AN_{r,t}\dK_{r,t}K_{r,t}}_{\equiv Y_{r,t}(K_{r,t})}
-    = \left(1+\underbrace{s\AN_{r,t}-\delta_K}_{\equiv\gK_{r,t}} +\tdK_{r,t}+\tdA_{r,t}\right)K_{r,t},
+    K_{r,t+1} = (1-\delta_K)\dK_{r,t}K_{r,t}+\underbrace{s\AN_{r,t}\dK_{r,t}K_{r,t}}_{\equiv Y_{r,t}(K_{r,t})}
+    = \left(1+\underbrace{s\AN_{r,t}-\delta_K}_{\equiv\gKN_{r,t}} +\tdK_{r,t}\right)K_{r,t},
   \end{equation}
 %\end{subeqations}
-  where we have assumed that the production function $Y_{r,t}(K_{r,t})\equiv s \dA_{r,t}\AN_{r,t}\dK_{r,t}K_{r,t}$ is of $A-K$-type. Further, we have introduced  rescaled damage terms for TFP damages, $\tdA_{r,t}\equiv\dA_{r,t}-1$, as well as for damages to the capital stock, $\tdK_{r,t}\equiv\dK_{r,t}-1$. This enables us to rewrite the equation for capital accumulation as a linear difference equation with growth rate  $\gK_{r,t}+\tdK_{r,t}+\tdA_{r,t}$, where $\gK_{r,t}\equiv s\AN_{r,t}-\delta_K $ denotes the growth rate of the unperturbed growth path (without climate shocks) and the terms $\tdK_{r,t}$ and $\tdA_{r,t}$ describe climate induced deviations from this path.
+  where we have assumed that the production function $Y_{r,t}(K_{r,t})\equiv s \AN_{r,t}\dK_{r,t}K_{r,t}$ is of $A-K$-type, where are $\AN_{r,t}$ describes TFP. Further, we have introduced  rescaled damage terms for damages to the capital stock, $\tdK_{r,t}\equiv(\dK_{r,t}-1)(1+\gKN_{r,t})$. This enables us to rewrite the equation for capital accumulation as a linear difference equation with growth rate  $\gKN_{r,t}+\tdK_{r,t}+\tdA_{r,t}$, where $\gKN_{r,t}\equiv s\AN_{r,t}-\delta_K $ denotes the growth rate of the unperturbed growth path (without climate shocks) and the terms $\tdK_{r,t}$ describe climate induced deviations from this path.
 
 Analogous to the calculations in in Sec.~\ref{subsec:analytSCC}, we may solve Eq.~\eqref{eq:Solow} which permits to express the perturbed capital stock in terms of the unperturbed one,
 \begin{equation}
@@ -401,7 +401,7 @@ Analogous to the calculations in in Sec.~\ref{subsec:analytSCC}, we may solve Eq
 where
 \begin{equation}
   \label{eq:D}
-  \DKA_{r,t}\equiv\prod_{t'=0}^{t}\left(1+\frac{\tdK_{r,t}+\tdA_{r,t}}{1+\gK_{t'}}\right)
+  \DKA_{r,t}\equiv\prod_{t'=0}^{t}\left(1+\tdK_{r,t}\right)
 \end{equation}
 and
 \begin{equation}
@@ -412,7 +412,7 @@ and
 
  \subsubsection{Regional Langrangian for $\SCC$ with capital losses}
 \label{sec:LKAreg}
-From Eq.~\eqref{eq:Solow2}, we see that if the TFP $A_{r,t}$ is not affected by the climate shock and the production function is linear in $K_{r,t,}$ (e.g., of $A-K$ type), we may express the perturbed production as a product of a damage factor $\DK_{r,t}\equiv\equiv\prod_{t'=0}^{t}\left(1+\frac{\tdK_{r,t}}{1+\gK_{r,t'}}\right)$ and the GDP growth path of the unperturbed system $Y^{0}_{r,t}\equiv s A_{r,t}K_{r,t}^0$,
+From Eq.~\eqref{eq:Solow2}, we see that if the TFP $A_{r,t}$ is not affected by the climate shock and the production function is linear in $K_{r,t,}$ (e.g., of $A-K$ type), we may express the perturbed production as a product of a damage factor $\DK_{r,t}\equiv\prod_{t'=0}^{t}(1+\tdK_{r,t})$ and the GDP growth path of the unperturbed system $Y^{0}_{r,t}\equiv s A_{r,t}K_{r,t}^0$,
 \begin{equation}
   \label{eq:GDP2}
   Y_{r,t}\equiv\DK_{r,t}Y^{0}_{r,t}.
@@ -487,7 +487,7 @@ The first order conditions with respect to emissions then reads
 where we have introduced the marginal change of the capital growth rate with temperature
 \begin{equation}
   \label{eq:ThetaK}
-  \Theta^K_{r,t}\equiv - (1+\gK_{r,t}+\dK_{r,t})^{-1}\pf{\dK_{r,t}}{T_{r,t}}.
+  \Theta^K_{r,t}\equiv - (1+\gKN_{r,t}+\dK_{r,t})^{-1}\pf{\dK_{r,t}}{T_{r,t}}.
 \end{equation}
 \begin{itemize}
 \item \todo{Damages are not explicitly time dependent anymore, only indirect dependence via the regional temperature}
