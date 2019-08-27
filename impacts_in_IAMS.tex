@@ -73,7 +73,7 @@
 
 \begin{frontmatter}
 
-  \title{How to include climate impacts in macroeconomic growth models?}
+  \title{How to account for climate impacts in macroeconomic growth models?}
 
 \author[PIK]{C.~Otto\corref{mycorrespondingauthor}}
 \cortext[mycorrespondingauthor]{Corresponding author}
@@ -121,7 +121,7 @@ The production system in integrated assessment models (IAMs) is often described 
 \end{equation}
 where $\tau$ and $T$ are the slow timescale of the IAM (e.g, decadal) and the global mean temperature, respectively. Further, $\xi_K$, $\xi_L$, and $\xi_E$ denote shares of the production factors capital $K$, labor $L$, and $energy$, respectively, and $\theta_K$, $\theta_L$, and $\theta_E$ denote capital, labor and energy efficiencies. The intertemporal elasticity of substitution is denoted by $\rho_Y$. Damages to total factor productivity $A$, capital stock$ K$, and labor productivity $\theta_L$ are denoted by $\DA$, $\DK$, and $\DL$, respectively. They are only implicitly time dependent via the global mean temperature $T$. 
 \begin{itemize}
-\item \todo{So far, the capital stock is the only impact channel for which it make sense to derive impact channel specific losses, because capital shock can trigger investment decisions.}
+\item \todo{So far, the capital stock appears to be the only impact channel for which it make sense to derive impact channel specific losses, because capital shock can trigger investment decisions.}
 \end{itemize}
 \section{Empirical analysis}
 \label{sec:empAna}
@@ -265,7 +265,8 @@ Applying this coordinate transformation to Eq.~\eqref{eq:expGrowth} and dropping
 where we have employed the relation $\tilde{Y}_0=Y_0$ in the last line. Transforming Eq.~\eqref{eq:Ytilde} back to the original coordinate system then yields
 \begin{equation}
   \label{eq:1}
-  Y_t=D_tY^0_t,
+%  Y_t=D_tY^0_t,
+Y_t=\underbrace{\prod_{t'=0}^{t}\left(1+\frac{\delta_{t'}}{1+g_{t'}}\right)}_{\equiv D_t}Y_t^0
 \end{equation}
 where
 \begin{equation}
@@ -353,8 +354,12 @@ The first order conditions then read
                                               &= -\lambda_{r,t}^{-1}\sum_{t'=0}^{\T}\sum_{r'}\lambda_{r',t'}Y_{r',t'}\frac{\partial }{\partial E_{r,t}}\left[\prod_{t''=0}^{t'}\left[1+\frac{\delta_{r',t''}\left(\sum_{\tilde{t}=0}^{t''}E_{r',\tilde{t}}\right)}{1+g_{r,t''}} \right] \right]\notag\\
                                          &=-\lambda_{r,t}^{-1}\sum_{t'=t}^{\T}\sum_{r'}\lambda_{r',t'}Y_{r',t'} \sum_{t''=t}^{t'}\big(1+g_{n,t''}\big)^{-1}\pf{\delta_{r',t''}}{E_{r,t}}\prod_{\tilde{t}=0,\tilde{t}\neq t''}^{t'}\left[1+\frac{\delta_{r',\tilde{t}}}{1+g_{r,\tilde{t}}} \right]\notag\\
                                          &=-\lambda_{r,t}^{-1}\sum_{t'=t}^{\T}\sum_{r'}\lambda_{r',t'}Y_{r',t'}\underbrace{\prod_{\tilde{t}=0}^{t'}\left[1+\frac{\delta_{r',\tilde{t}}}{1+g_{r,\tilde{t}}}\right]}_{=D_{r',t'}}\sum_{t''=t}^{t'}\underbrace{(1+g_{r',t''}+\delta_{r',t''})^{-1}\pf{\delta_{r',t''}}{T_{r',t''}}}_{\equiv -\Theta_{r',t''}}\underbrace{\pf{T_{r',t''}}{E_{r,t}}}_{\equiv\Delta T_{r',t'',r,t}}\notag\\
-&= \sum_{t'=t}^{\T}\sum_{r'}\Phi_{r',t',t}Y_{r',t'}D_{r',t'}\sum_{t''=t}^{t'}\Theta_{r',t''}\Delta T_{r',t'',r,t},  
+&= \sum_{t'=t}^{\T}\sum_{r'}\Phi_{r',t',t}Y^0_{r',t'}D_{r',t'}\sum_{t''=t}^{t'}\Theta_{r',t''}\Delta T_{r',t'',r,t},  
 \end{align}
+% \begin{equation*}
+%   \label{eq:2}
+%   p_{r,t}= \sum_{t'=t}^{\T}\sum_{r'}\Phi_{r',t',t}Y^0_{r',t'}D_{r',t'}\sum_{t''=t}^{t'}\Theta_{r',t''}\Delta T_{r',t'',r,t},  
+% \end{equation*}
 where we have introduced the marginal change of the growth rate with temperature
 \begin{equation}
   \label{eq:Theta}
@@ -376,6 +381,16 @@ as well as the marginal response of temperature in region response to emissions
            \prod_{\tilde{t}=t+1}^{t'}(1+r_{r',\tilde{t}})^{-1} & \text{for }t<t'.
            \end{cases}
 \end{align}
+
+\begin{align*}
+\Phi_{r',t',t}\equiv\lambda_{r,t}^{-1}\lambda_{r',t'}=
+         \begin{cases}
+           1 &\text{for }t=t',\\
+           \prod_{\tilde{t}=t+1}^{t'}(1+r_{r',\tilde{t}})^{-1} & \text{for }t<t'.
+           \end{cases}
+\end{align*}
+
+
 \begin{itemize}
 \item \todo{SCC appear to decrease with increasing Damages}
 \item \todo{Damages are not explicitly time dependent anymore, only indirect dependence via the regional temperature}
@@ -390,7 +405,12 @@ Let us assume that in each region $r$, capital accumulation can be described by 
     K_{r,t+1} = (1-\delta_K)\dK_{r,t}K_{r,t}+\underbrace{s\AN_{r,t}\dK_{r,t}K_{r,t}}_{\equiv Y_{r,t}(K_{r,t})}
     = \left(1+\underbrace{s\AN_{r,t}-\delta_K}_{\equiv\gKN_{r,t}} +\tdK_{r,t}\right)K_{r,t},
   \end{equation}
-%\end{subeqations}
+  % \end{subeqations}
+\begin{equation}
+    K_{r,t+1} = (1-\delta_K)\dK_{r,t}K_{r,t}+\underbrace{s\AN_{r,t}\dK_{r,t}K_{r,t}}_{\equiv Y_{r,t}(K_{r,t})}
+    = \left(1+\underbrace{s\AN_{r,t}-\delta_K}_{\equiv\gKN_{r,t}} +\tdK_{r,t}\right)K_{r,t},
+  \end{equation}
+
   where we have assumed that the production function $Y_{r,t}(K_{r,t})\equiv s \AN_{r,t}\dK_{r,t}K_{r,t}$ is of $A-K$-type, where are $\AN_{r,t}$ describes TFP. Further, we have introduced  rescaled damage terms for damages to the capital stock, $\tdK_{r,t}\equiv(\dK_{r,t}-1)(1+\gKN_{r,t})$. This enables us to rewrite the equation for capital accumulation as a linear difference equation with growth rate  $\gKN_{r,t}+\tdK_{r,t}+\tdA_{r,t}$, where $\gKN_{r,t}\equiv s\AN_{r,t}-\delta_K $ denotes the growth rate of the unperturbed growth path (without climate shocks) and the terms $\tdK_{r,t}$ describe climate induced deviations from this path.
 
 Analogous to the calculations in in Sec.~\ref{subsec:analytSCC}, we may solve Eq.~\eqref{eq:Solow} which permits to express the perturbed capital stock in terms of the unperturbed one,
@@ -398,6 +418,9 @@ Analogous to the calculations in in Sec.~\ref{subsec:analytSCC}, we may solve Eq
   \label{eq:Solow2}
   K_{r,t}=\DKA_{r,t}K^0_{r,t}\quad\forall\,r,t,
 \end{equation}
+\begin{equation*} K_{r,t}=\underbrace{\prod_{t'=0}^{t}\left(1+\tdK_{r,t}\right)}_{\equiv\DKA_{r,t}}K^0_{r,t},
+\end{equation*}
+
 where
 \begin{equation}
   \label{eq:D}
@@ -476,14 +499,18 @@ The first order conditions with respect to emissions then reads
   \frac{\partial\mcL}{\partial E_{r,t}} &= \lambda_{r,t}\underbrace{\frac{\partial Y_{r,t}}{\partial E_{r,t}}}_{=p_{r,t}}+ \sum_{t'=0}^{\T}\sum_{r'}\lambda_{r',t'}\left[Y_{r',t'}\frac{\partial \DK_{r',t'}}{\partial E_{r,t}}-\pf{\DK_{r',t'+1}}{E_{r,t}}K_{r',t'+1}+(1-\delta_K)\pf{\DK_{r',t'}}{E_{r,t}}K_{r',t'}\right]=0\quad\forall\,r,t\notag\\
   \Rightarrow \quad p_{r,t} &= -\lambda_{r,t}^{-1}\sum_{t'=0}^{\T}\sum_{r'}\lambda_{r',t'}\left[\left(Y_{r',t'}+(1-\delta_K)K_{r',t'}\right)\pf{\DK_{r',t'}}{ E_{r,t}}-K_{r',t'+1}\pf{\DK_{r',t'+1}}{E_{r,t}}\right]\notag\\
                                         &=                                          -\lambda_{r,t}^{-1}\sum_{r'}\left[\sum_{t'=0}^{\T}\lambda_{r',t'}\left[Y_{r',t'}+(1-\delta_K)K_{r',t'}\right]\pf{\DK_{r',t'}}{ E_{r,t}}- \sum_{t'=0}^{\T} \lambda_{r',t'}K_{r',t'+1}\pf{\DK_{r',t+1}}{E_{r,t}}\right]\notag\\
-                                        &=                                          \lambda_{r,t}^{-1}\sum_{r'}\left[\sum_{t'=t}^{\T}\lambda_{r',t'}\left[Y_{r',t'}+(1-\delta_K)K_{r',t'}\right]\DK_{r',t'}\sum_{\tilde{t}=t}^{t'}\Theta^{K}_{r',\tilde{t}}\Delta T_{r',\tilde{t},r,t}\right.\\
-                                        &\qquad\,\left.-\sum_{t'=t+1}^{\T}\lambda_{r',t'}K_{r',t'+1}\DK_{r',t'}\sum_{\tilde{t}=t+1}^{t'}\Theta^{K}_{r',\tilde{t}}\Delta T_{r',\tilde{t},r,t}\right]\notag\\
-  &=
-\lambda_{r,t}^{-1}\sum_{r'}\left[\sum_{t'=t}^{\T}\lambda_{r',t'}\left[Y_{r',t'}+(1-\delta_K)K_{r',t'}\right]\DK_{r',t'}\sum_{\tilde{t}=t}^{t'}\Theta^{K}_{r',\tilde{t}}\Delta T_{r',\tilde{t},r,t}\right.\\ &\qquad\,\left.-\sum_{t'=t}^{\T-1}\lambda_{r',t'+1}K_{r',t'}\DK_{r',t'+1}\sum_{\tilde{t}=t+1}^{t'-1}\Theta^{K}_{r',\tilde{t}}\Delta T_{r',\tilde{t},r,t}\right]\notag\\                                         % -\lambda_{r,t}^{-1}\sum_{t'=0}^{\T}\sum_{r'}\lambda_{r',t'}Y_{r',t'}\frac{\partial }{\partial E_{r,t}}\left[\prod_{t''=0}^{t'}\left[1+\frac{\delta_{r',t''}\left(\sum_{\tilde{t}=0}^{t''}E_{r',\tilde{t}}\right)}{1+g_{r,t''}} \right] \right]\notag\\
+                                        &=                                          \lambda_{r,t}^{-1}\sum_{r'}\left[\sum_{t'=t}^{\T}\lambda_{r',t'}\left[Y_{r',t'}+(1-\delta_K)K_{r',t'}\right]\DK_{r',t'}\sum_{\tilde{t}=t}^{t'}\Theta^{K}_{r',\tilde{t}}\Delta T_{r',\tilde{t},r,t}\right.\\                                        &\qquad\,\left.-\sum_{t'=t+1}^{\T}\lambda_{r',t'}K_{r',t'+1}\DK_{r',t'}\sum_{\tilde{t}=t+1}^{t'}\Theta^{K}_{r',\tilde{t}}\Delta T_{r',\tilde{t},r,t}\right]\notag\\
+  &=    \lambda_{r,t}^{-1}\sum_{r'}\left[\sum_{t'=t}^{\T}\lambda_{r',t'}\left[Y^0_{r',t'}+(1-\delta_K)K^0_{r',t'}\right]\DK_{r',t'}\sum_{\tilde{t}=t}^{t'}\Theta^{K}_{r',\tilde{t}}\Delta T_{r',\tilde{t},r,t}\right.\\ &\qquad\,\left.-\sum_{t'=t}^{\T-1}\lambda_{r',t'+1}K^0_{r',t'}\DK_{r',t'+1}\sum_{\tilde{t}=t+1}^{t'-1}\Theta^{K}_{r',\tilde{t}}\Delta T_{r',\tilde{t},r,t}\right]\notag\\                                         %
+% -\lambda_{r,t}^{-1}\sum_{t'=0}^{\T}\sum_{r'}\lambda_{r',t'}Y_{r',t'}\frac{\partial }{\partial E_{r,t}}\left[\prod_{t''=0}^{t'}\left[1+\frac{\delta_{r',t''}\left(\sum_{\tilde{t}=0}^{t''}E_{r',\tilde{t}}\right)}{1+g_{r,t''}} \right] \right]\notag\\
 %                                          &=-\lambda_{r,t}^{-1}\sum_{t'=t}^{\T}\sum_{r'}\lambda_{r',t'}Y_{r',t'} \sum_{t''=t}^{t'}\big(1+g_{n,t''}\big)^{-1}\pf{\delta_{r',t''}}{E_{r,t}}\prod_{\tilde{t}=0,\tilde{t}\neq t''}^{t'}\left[1+\frac{\delta_{r',\tilde{t}}}{1+g_{r,\tilde{t}}} \right]\notag\\
 %                                          &=-\lambda_{r,t}^{-1}\sum_{t'=t}^{\T}\sum_{r'}\lambda_{r',t'}Y_{r',t'}\underbrace{\prod_{\tilde{t}=0}^{t'}\left[1+\frac{\delta_{r',\tilde{t}}}{1+g_{r,\tilde{t}}}\right]}_{=D_{r',t'}}\sum_{t''=t}^{t'}\underbrace{(1+g_{r',t''}+\delta_{r',t''})^{-1}\pf{\delta_{r',t''}}{T_{r',t''}}}_{\equiv -\Theta_{r',t''}}\underbrace{\pf{T_{r',t''}}{E_{r,t}}}_{\equiv\Delta T_{r',t'',r,t}}\notag\\
 % &= \sum_{t'=t}^{\T}\sum_{r'}\Phi_{r',t',t}Y_{r',t'}D_{r',t'}\sum_{t''=t}^{t'}\Theta_{r',t''}\Delta T_{r',t'',r,t},  
 \end{align}
+\begin{align}
+  p_{r,t}&=    \sum_{r'}\left[\sum_{t'=t}^{\T}\Phi^K_{r',t',t}\left[Y^0_{r',t'}+(1-\delta_K)K^0_{r',t'}\right]\DK_{r',t'}\sum_{\tilde{t}=t}^{t'}\Theta^{K}_{r',\tilde{t}}\Delta T_{r',\tilde{t},r,t}\right.\\ &\qquad\,\left.-\sum_{t'=t}^{\T-1}\Phi^K_{r',t'+1,t}K^0_{r',t'}\DK_{r',t'+1}\sum_{\tilde{t}=t+1}^{t'-1}\Theta^{K}_{r',\tilde{t}}\Delta T_{r',\tilde{t},r,t}\right]\notag                                        
+\end{align}
+
+
 where we have introduced the marginal change of the capital growth rate with temperature
 \begin{equation}
   \label{eq:ThetaK}
