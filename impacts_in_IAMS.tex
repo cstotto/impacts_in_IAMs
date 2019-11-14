@@ -435,15 +435,19 @@ and
 
  \subsubsection{Regional Langrangian for $\SCC$ with capital losses}
 \label{sec:LKAreg}
-From Eq.~\eqref{eq:Solow2}, we see that if the TFP $A_{r,t}$ is not affected by the climate shock and the production function is linear in $K_{r,t,}$ (e.g., of $A-K$ type), we may express the perturbed production as a product of a damage factor $\DK_{r,t}\equiv\prod_{t'=0}^{t}(1+\tdK_{r,t})$ and the GDP growth path of the unperturbed system $Y^{0}_{r,t}\equiv s A_{r,t}K_{r,t}^0$,
-\begin{equation}
-  \label{eq:GDP2}
-  Y_{r,t}\equiv\DK_{r,t}Y^{0}_{r,t}.
-\end{equation}
+% From Eq.~\eqref{eq:Solow2}, we see that if the TFP $A_{r,t}$ is not affected by the climate shock and the production function is linear in $K_{r,t,}$ (e.g., of $A-K$ type) we may express the perturbed production as a product of a damage factor $\DK_{r,t}\equiv\prod_{t'=0}^{t}(1+\tdK_{r,t})$ and the GDP growth path of the unperturbed system $Y^{0}_{r,t}\equiv s A_{r,t}K_{r,t}^0$,
+For the production function, we may assume
+\begin{equation*}
+  Y_{r,t}=s A_{r,t}^0 (\DK_{r,t}K_{r,0})
+\end{equation*}
+% \begin{equation}
+%   \label{eq:GDP2}
+%   Y_{r,t}\equiv\DK_{r,t}Y^{0}_{r,t}.
+% \end{equation}
 
 \begin{multline}
   \label{eq:LKAreg} \mcL_r(\T;E_r,c_r)\equiv\sum_{t'=0}^{T}\sum_{r'}\left[\omega_{r'}N_{r',t'}u\big(c_{r',t'}\big)(1+\rho)^{-t'}\right.\\
-  \left.+\lambda_{r',t'}\left[\DK_{r',t'}Y_{r',t'}\big(E_{r',t'}\big) -c_{r',t'}N_{r',t'}-\left(\DK_{r',t'+1}K_{r',t'+1}-\big(1-\delta_K\big)\DK_{r',t'}K_{r',t'}\right)-p_{r,t}E_{r,t} \right]\right],
+  \left.+\lambda_{r',t'}\left[Y_{t,t}\big(E_{r',t'}\big) -c_{r',t'}N_{r',t'}-\left(\DK_{r',t'+1}K_{r',t'+1}-\big(1-\delta_K\big)\DK_{r',t'}K_{r',t'}\right)-p_{r,t}E_{r,t} \right]\right],
 \end{multline}
 where we have introduced the regional tax on carbon emissions $p_{r,t}$.
 \begin{itemize}
